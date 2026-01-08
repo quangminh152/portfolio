@@ -94,6 +94,7 @@
 // export default About;
 
 import { EXPERIENCE } from '../constants';
+import portrait from '../assets/IMG_4467.png';
 
 // FIX 1: Removed "import React" and ": React.FC" to stop the build error
 const About = () => {
@@ -133,9 +134,8 @@ const About = () => {
 
                 {/* Right: Image */}
                 <div className="relative w-full md:w-[80%] aspect-[4/3] md:aspect-[3/4] rounded-xl overflow-hidden bg-[#F0F0F0] order-first md:order-last animate-slide-up delay-300">
-                    {/* FIX 2: Updated path. Ensure IMG_4467.png is inside "public/assets/" folder */}
                     <img 
-                        src="/assets/IMG_4467.png" 
+                        src={portrait}
                         alt="Portrait of Minh Do" 
                         className="w-full h-full object-cover block"
                     />
