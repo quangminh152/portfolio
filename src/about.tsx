@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function About() {
   return (
     <main className="px-[10vw] pt-[180px] pb-[120px] text-[#111]">
