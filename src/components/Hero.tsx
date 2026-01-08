@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
                     <span className="block mt-2 text-[#a6abb4]">Product Designer.</span>
                 </h1>
                 
-                <h2 className="text-xl md:text-2xl lg:text-[1.75rem] font-normal text-[#6b7280] max-w-3xl leading-relaxed tracking-tight">
+                <h2 className="text-xl  lg:text-[1.75rem] font-normal text-[#6b7280] max-w-6xl leading-[1.4] tracking-tight">
                     4+ years of experience, specialized in User-centered Design, UX Research, and Product Design with a deep expertise in the Ride-Hailing and Fintech domains.
                 </h2>
             </div>
