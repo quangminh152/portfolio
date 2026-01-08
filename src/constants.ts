@@ -27,7 +27,7 @@ export const COMPANIES: Company[] = [
                 title: "🔒 Building a Scalable Invoice & Receipt Experience for B2B Users on Banqup One Mobile",
                 desc: "Streamlining multinational B2B invoicing flows for millions of business users across the EU ecosystem.",
                 img: banqup,
-                link: "https://minhdo-design.notion.site/Coming-soon-be-beClean-Hourly-Cleaning-Service-1-2e07dcb00ef2807ea398ce1a5fcd001f?pvs=74"
+                link: "https://minhdo-design.notion.site/Building-a-Scalable-Invoice-Receipt-Experience-for-B2B-Users-on-Banqup-One-Mobile-2e07dcb00ef2807ea398ce1a5fcd001f?pvs=74"
             }
         ]
     },
@@ -45,7 +45,7 @@ export const COMPANIES: Company[] = [
                 title: "beClean: Hourly Cleaning Service",
                 desc: "Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.",
                 img: beclean,
-                link: "https://minhdo-design.notion.site/Coming-soon-be-beClean-Hourly-Cleaning-Service-1-2e07dcb00ef2807ea398ce1a5fcd001f?pvs=74"
+                link: "https://minhdo-design.notion.site/Coming-soon-be-beClean-Hourly-Cleaning-Service-2e07dcb00ef28085a20fdb632174a126"
             },
             {
                 title: "Bounce Dispatch to Multiple Vehicles",
