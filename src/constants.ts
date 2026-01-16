@@ -43,7 +43,7 @@ export const COMPANIES: Company[] = [
         projects: [
             {
                 title: "beClean: Hourly Cleaning Service",
-                desc: "Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.",
+                desc: "Research and design for beClean - a new service of be that provides hourly house cleaning services.",
                 img: beclean,
                 link: "https://minhdo-design.notion.site/Coming-soon-be-beClean-Hourly-Cleaning-Service-2e07dcb00ef28085a20fdb632174a126"
             },
