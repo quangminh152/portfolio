@@ -27,7 +27,7 @@ export const COMPANIES: Company[] = [
                 title: "🔒 Building a Scalable Invoice & Receipt Experience for B2B Users on Banqup One Mobile",
                 desc: "Streamlining multinational B2B invoicing flows for millions of business users across the EU ecosystem.",
                 img: banqup,
-                link: "https://minhdo-design.notion.site/Building-a-Scalable-Invoice-Receipt-Experience-for-B2B-Users-on-Banqup-One-Mobile-2e07dcb00ef2807ea398ce1a5fcd001f?pvs=74"
+                link: "https://minhdo-design.notion.site/Building-a-Scalable-Invoice-Receipt-Experience-for-B2B-Users-on-Banqup-One-Mobile-2ea7dcb00ef28005bb93dad3d397e64c"
             }
         ]
     },
@@ -45,19 +45,19 @@ export const COMPANIES: Company[] = [
                 title: "beClean: Hourly Cleaning Service",
                 desc: "Research and design for beClean - a new service of be that provides hourly house cleaning services.",
                 img: beclean,
-                link: "https://minhdo-design.notion.site/Coming-soon-be-beClean-Hourly-Cleaning-Service-2e07dcb00ef28085a20fdb632174a126"
+                link: "https://minhdo-design.notion.site/be-beClean-Hourly-Cleaning-Service-14e7dcb00ef28053b28adc33a3f12c0f?pvs=74"
             },
             {
                 title: "Bounce Dispatch to Multiple Vehicles",
                 desc: "Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.",
                 img: bounceMultipleVehicles,
-                link: "https://minhdo-design.notion.site/be-Bounce-Dispatch-to-Multiple-Vehicles-when-finding-drivers-2e07dcb00ef280438c81da736e25fddf?pvs=74"
+                link: "https://minhdo-design.notion.site/be-Bounce-Dispatch-to-Multiple-Vehicles-when-finding-drivers-c3c667f52b164c57bd1b11039cbdb524?pvs=74"
             },
             {
                 title: "Revamp beDelivery Home Screen",
                 desc: "Revamp the home screen of beDelivery service, increasing CTR.",
                 img: bedelivery,
-                link: "https://minhdo-design.notion.site/be-Revamp-beDelivery-Home-Screen-2e07dcb00ef28028a4b2fb5cb7e9ff94?pvs=74"
+                link: "https://minhdo-design.notion.site/be-Revamp-beDelivery-Home-Screen-05f8d5acd1a94874afc287567e5521f0"
             }
         ]
     },
@@ -74,7 +74,7 @@ export const COMPANIES: Company[] = [
                 title: "Revamp MoMo's Expense Management Mini-App",
                 desc: "Revamping financial health tools to help users track spending habits more intuitively.",
                 img: expenseManagement,
-                link: "https://minhdo-design.notion.site/MoMo-Revamp-Expense-Management-feature-2e07dcb00ef28049b540ea7e35d0046a?pvs=74"
+                link: "https://minhdo-design.notion.site/MoMo-Revamp-Expense-Management-feature-f094ce612d334280b0a480ffbf310538"
             }
         ]
     },
