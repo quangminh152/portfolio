@@ -103,7 +103,7 @@ const Header: React.FC = () => {
       isScrolled ? 'bg-white/78 backdrop-blur-xl' : 'bg-transparent'
     }`}
   >
-    <div className="mx-auto flex w-full max-w-[1720px] items-center justify-between px-4 py-5 md:px-12 md:py-7 lg:px-[10vw]">
+    <div className="mx-auto flex w-full max-w-full items-center justify-between px-4 py-5 md:px-12 md:py-7 lg:px-[10vw]">
       <Link
         to="/"
         className="text-[13px] font-semibold uppercase tracking-[0.02em] text-black transition-opacity hover:opacity-60 md:text-[15px]"

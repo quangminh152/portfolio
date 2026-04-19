@@ -402,21 +402,14 @@ function CountUp({
 
 const Section = ({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: React.ReactNode;
 }) => (
   <section id={id} className="scroll-mt-28 border-t border-black/6 py-14 md:py-20">
-    {eyebrow ? (
-      <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
-        {eyebrow}
-      </p>
-    ) : null}
 
     <h2 className="mb-6 text-[clamp(1.8rem,3vw,2.7rem)] font-semibold tracking-[-0.03em] text-black">
       {title}
@@ -909,7 +902,7 @@ const CaseStudyDelivery: React.FC = () => {
 
         <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
           <article className="min-w-0">
-            <Section id="background" eyebrow="01" title="Background">
+            <Section id="background" title="Background">
               <Box>
                 <p>
                   <strong>beDelivery</strong> is one of be’s main and fastest-growing services,
@@ -922,7 +915,7 @@ const CaseStudyDelivery: React.FC = () => {
               </Box>
             </Section>
 
-            <Section id="issue" eyebrow="02" title="What’s the issue?">
+            <Section id="issue" title="What’s the issue?">
               <p>
                 The Product team requested a revamp of the beDelivery home screen to address existing
                 UX and product issues, improve usability, and increase performance metrics.
@@ -948,7 +941,7 @@ const CaseStudyDelivery: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="success" eyebrow="03" title="Measuring the success">
+            <Section id="success" title="Measuring the success">
               <Box>
                 <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
                   Goals and objectives
@@ -962,7 +955,7 @@ const CaseStudyDelivery: React.FC = () => {
               </Box>
             </Section>
 
-            <Section id="insights" eyebrow="04" title="Gathering the insights">
+            <Section id="insights" title="Gathering the insights">
               <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Evaluate the current version</h3>
                 <p className="mt-3">
@@ -1074,7 +1067,7 @@ const CaseStudyDelivery: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="options" eyebrow="05" title="What we came up with">
+            <Section id="options" title="What we came up with">
               <OptionBlock
                 title="Option A"
                 states={optionAStates}
@@ -1090,7 +1083,7 @@ const CaseStudyDelivery: React.FC = () => {
               />
             </Section>
 
-            <Section id="testing" eyebrow="06" title="Testing the versions">
+            <Section id="testing" title="Testing the versions">
               <p>
                 After presenting two options, the team decided to run an A/B test with 20% of users,
                 comparing the current version against the two proposed directions.
@@ -1129,7 +1122,7 @@ const CaseStudyDelivery: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="improvements" eyebrow="07" title="Adding features and improvements">
+            <Section id="improvements" title="Adding features and improvements">
               <BulletList items={improvementPoints} />
 
               <div className="pt-2">

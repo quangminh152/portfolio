@@ -263,21 +263,14 @@ function useActiveSection(items: TocItem[]) {
 
 const Section = ({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: React.ReactNode;
 }) => (
   <section id={id} className="scroll-mt-28 border-t border-black/6 py-14 md:py-20">
-    {eyebrow ? (
-      <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
-        {eyebrow}
-      </p>
-    ) : null}
 
     <h2 className="mb-6 text-[clamp(1.8rem,3vw,2.7rem)] font-semibold tracking-[-0.03em] text-black">
       {title}
@@ -571,7 +564,7 @@ const CaseStudyExpense: React.FC = () => {
 
         <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
           <article className="min-w-0">
-            <Section id="background" eyebrow="01" title="Background">
+            <Section id="background" title="Background">
               <p>
                 The Expense Management feature on MoMo had already been launched and attracted a meaningful
                 number of users, but it also faced several core product challenges.
@@ -602,7 +595,7 @@ const CaseStudyExpense: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="problem" eyebrow="02" title="Problem Statement">
+            <Section id="problem" title="Problem Statement">
               <div>
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">UX Problems</h3>
                 <div className="mt-4">
@@ -690,7 +683,7 @@ const CaseStudyExpense: React.FC = () => {
 </div>
             </Section>
 
-            <Section id="insights" eyebrow="03" title="Gathering insights">
+            <Section id="insights" title="Gathering insights">
               <div>
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Users’ Segmentation</h3>
                 <p className="mt-3">
@@ -753,7 +746,7 @@ const CaseStudyExpense: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="solution" eyebrow="04" title="Solution">
+            <Section id="solution" title="Solution">
               <div>
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Full flow</h3>
                 <div className="mt-5">

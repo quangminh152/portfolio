@@ -78,21 +78,19 @@ function useActiveSection(items: TocItem[]) {
 
 const Section = ({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: React.ReactNode;
 }) => (
   <section id={id} className="scroll-mt-28 border-t border-black/6 py-14 md:py-20">
-    {eyebrow ? (
+    {/* {eyebrow ? (
       <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
         {eyebrow}
       </p>
-    ) : null}
+    ) : null} */}
 
     <h2 className="mb-6 text-[clamp(1.8rem,3vw,2.7rem)] font-semibold tracking-[-0.03em] text-black">
       {title}
@@ -356,7 +354,7 @@ const CaseStudyBanqup: React.FC = () => {
 
         <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
           <article className="min-w-0">
-            <Section id="overview" eyebrow="01" title="Overview">
+            <Section id="overview" title="Overview">
               
 
               <p>
@@ -365,7 +363,7 @@ const CaseStudyBanqup: React.FC = () => {
               </p>
             </Section>
 
-            <Section id="context" eyebrow="02" title="Context">
+            <Section id="context" title="Context">
               <p>
                 Banqup serves European SMEs who need to manage financial documents as part of their daily workflow.
                 In this environment, invoice and receipt flows need to work across multiple markets, business needs,
@@ -381,7 +379,7 @@ const CaseStudyBanqup: React.FC = () => {
               />
             </Section>
 
-            <Section id="role" eyebrow="03" title="Role & Scope">
+            <Section id="role" title="Role & Scope">
               <p>
                 I worked on the product design side of the mobile experience, helping shape how users interact
                 with core invoice and receipt flows in a way that could scale across the Banqup ecosystem.
@@ -396,7 +394,7 @@ const CaseStudyBanqup: React.FC = () => {
               />
             </Section>
 
-            <Section id="share" eyebrow="04" title="What I can share">
+            <Section id="share" title="What I can share">
               <p>
                 While I cannot publish the detailed screens or internal flow logic publicly, I can discuss
                 the project at a high level and walk through my approach during an interview.
@@ -412,7 +410,7 @@ const CaseStudyBanqup: React.FC = () => {
               />
             </Section>
 
-            <Section id="nda" eyebrow="05" title="Availability">
+            <Section id="nda" title="Availability">
               <div className="mt-5 rounded-2xl border border-black/6 bg-black/[0.015] p-5">
                 <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
                   🔒 Confidential project

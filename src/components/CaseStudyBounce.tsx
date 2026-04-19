@@ -295,21 +295,14 @@ function CountUp({
 
 const Section = ({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: React.ReactNode;
 }) => (
   <section id={id} className="scroll-mt-28 border-t border-black/6 py-14 md:py-20">
-    {eyebrow ? (
-      <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
-        {eyebrow}
-      </p>
-    ) : null}
 
     <h2 className="mb-6 text-[clamp(1.8rem,3vw,2.7rem)] font-semibold tracking-[-0.03em] text-black">
       {title}
@@ -674,7 +667,7 @@ const CaseStudyBounce: React.FC = () => {
 
         <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
           <article className="min-w-0">
-            <Section id="background" eyebrow="01" title="Background & Overview">
+            <Section id="background" title="Background & Overview">
               <Box>
                 <p>
                   <strong>be</strong> is a platform focused primarily on transportation booking,
@@ -692,7 +685,7 @@ const CaseStudyBounce: React.FC = () => {
               </Box>
             </Section>
 
-            <Section id="issue" eyebrow="02" title="What’s the issue?">
+            <Section id="issue" title="What’s the issue?">
               <NumberedList items={issueSteps} />
 
               <div className="pt-2">
@@ -740,7 +733,7 @@ const CaseStudyBounce: React.FC = () => {
               </Box>
             </Section>
 
-            <Section id="success" eyebrow="03" title="Measuring the success">
+            <Section id="success" title="Measuring the success">
               <div>
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Goals and objectives</h3>
                 <div className="mt-4">
@@ -755,7 +748,7 @@ const CaseStudyBounce: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="insights" eyebrow="04" title="Gathering the insights">
+            <Section id="insights" title="Gathering the insights">
               <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">What do stakeholders say?</h3>
                 <div className="mt-4">
@@ -843,7 +836,7 @@ const CaseStudyBounce: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="results" eyebrow="05" title="The results">
+            <Section id="results" title="The results">
               <p>
                 Based on the blueprint, I moved into UI exploration, mapped the main use cases,
                 and documented the proposed display logic in detail so the team could validate
@@ -891,7 +884,7 @@ const CaseStudyBounce: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="next" eyebrow="06" title="What’s next?">
+            <Section id="next" title="What’s next?">
               <p>
                 A natural next step is to introduce multiple vehicle selection even earlier in the
                 journey, during pre-booking. That could further increase the likelihood of finding

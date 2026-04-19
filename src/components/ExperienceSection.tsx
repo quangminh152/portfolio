@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import banqupLogo from '../assets/banqup-logo.png';
 import beLogo from '../assets/be-logo.png';
 import momoLogo from '../assets/momo-logo.png';
@@ -48,7 +48,7 @@ const experienceItems: TimelineEntry[] = [
     companyLine: 'BE GROUP',
     period: 'Dec 2022 - Mar 2025',
     intro:
-      'BE Group is Vietnam’s big ride-hailing and super app platform with millions of users nationwide.',
+      'BE GROUP is Vietnam’s big ride-hailing and super app platform with millions of users nationwide.',
     description:
       'Led the user experience for be Ride Hailing - overseeing 5 squads of beTransport, beDelivery, beClean and Customer App on the consumer app, and part of bePartner app for drivers and cleaners.',
     bullets: [
@@ -78,7 +78,7 @@ const experienceItems: TimelineEntry[] = [
     id: 'usum',
     logoSrc: usumLogo,
     logoFallback: 'U',
-    role: 'Intern - Junior UX/UI Designer',
+    role: 'UX/UI Designer',
     companyLine: 'USUM Software',
     period: 'Sep 2021 - Apr 2022',
     intro:
@@ -107,14 +107,14 @@ const LogoBadge = ({
 }) => {
   if (src) {
     return (
-      <div className="h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-black/8 bg-white">
-        <img src={src} alt={fallback} className="h-full w-full object-contain" />
+      <div className="h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-black/8 bg-white md:h-14 md:w-14">
+        <img src={src} alt={fallback} className="h-full w-full object-contain " />
       </div>
     );
   }
 
   return (
-    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-black/8 bg-black/[0.03] text-sm font-semibold uppercase tracking-[0.08em] text-black/55">
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-black/8 bg-black/[0.03] text-sm font-semibold uppercase tracking-[0.08em] text-black/55 md:h-14 md:w-14">
       {fallback}
     </div>
   );
@@ -142,26 +142,46 @@ const TimelineRow = ({
   isOpen: boolean;
   onToggle: () => void;
 }) => {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    const updateHeight = () => {
+      setContentHeight(contentRef.current?.scrollHeight || 0);
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(contentRef.current);
+
+    return () => observer.disconnect();
+  }, [item.intro, item.description, item.bullets, item.highlight]);
+
   return (
     <div className="border-b border-black/8">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full appearance-none bg-transparent px-6 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015] [font:inherit]"
+        className="w-full appearance-none bg-transparent px-0 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015] [font:inherit] md:py-7"
       >
-        <span className="flex items-start gap-5">
+        <span className="flex items-start gap-4 md:gap-5">
           <LogoBadge src={item.logoSrc} fallback={item.logoFallback} />
 
           <span className="min-w-0 flex-1">
-            <span className="flex items-start justify-between gap-6">
+            <span className="flex items-start justify-between gap-4 md:gap-6">
               <span className="min-w-0">
-                <span className="block text-[clamp(1.3rem,2vw,1.45rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-black">
+                <span className="block text-[1.25rem] font-semibold leading-[1.12] tracking-[-0.03em] text-black md:text-[clamp(1.2rem,1.6vw,1.38rem)] md:tracking-[-0.035em]">
                   {item.companyLine}
                 </span>
-                <span className="mt-2 block text-[18px] font-medium leading-7 text-black/68">
+
+                <span className="mt-1.5 block text-[16px] font-medium leading-7 text-black/62 md:mt-2 md:text-[17px]">
                   {item.role}
                 </span>
-                <span className="mt-1 block text-[16px] leading-7 text-black/46">
+
+                <span className="mt-0.5 block text-[14px] leading-7 text-black/42 md:mt-1 md:text-[15px]">
                   {item.period}
                 </span>
               </span>
@@ -175,19 +195,24 @@ const TimelineRow = ({
       </button>
 
       <div
-        className={`overflow-hidden px-6 transition-[max-height,opacity,padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isOpen ? 'max-h-[1000px] pb-6 opacity-100' : 'max-h-0 pb-0 opacity-0'
-        }`}
+        className="overflow-hidden"
+        style={{
+          height: isOpen ? `${contentHeight}px` : '0px',
+          opacity: isOpen ? 1 : 0,
+          transition:
+            'height 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease',
+          willChange: 'height, opacity',
+        }}
       >
-        <div className="pl-[72px]">
+        <div ref={contentRef} className="px-0 pb-6 pl-[68px] pt-1 md:pl-[76px]">
           {item.intro ? (
-            <p className="max-w-full text-[18px] font-medium leading-8 text-black/82">
+            <p className="max-w-full text-[17px] font-medium leading-8 text-black/82 md:text-[18px]">
               {item.intro}
             </p>
           ) : null}
 
           {item.description ? (
-            <p className="mt-2 max-w-full text-[16px] leading-8 text-black/68">
+            <p className="mt-2 max-w-full text-[15px] leading-8 text-black/68 md:text-[16px]">
               {item.description}
             </p>
           ) : null}
@@ -197,7 +222,7 @@ const TimelineRow = ({
               {item.bullets.map((bullet) => (
                 <li key={bullet} className="flex gap-3">
                   <span className="mt-[12px] h-1.5 w-1.5 shrink-0 rounded-full bg-black/28" />
-                  <span className="max-w-full text-[16px] leading-8 text-black/68">
+                  <span className="max-w-full text-[15px] leading-8 text-black/68 md:text-[16px]">
                     {bullet}
                   </span>
                 </li>
@@ -206,7 +231,7 @@ const TimelineRow = ({
           ) : null}
 
           {item.highlight ? (
-            <p className="mt-5 text-[16px] font-medium leading-8 text-black/82">
+            <p className="mt-5 text-[15px] font-medium leading-8 text-black/82 md:text-[16px]">
               {item.highlight}
             </p>
           ) : null}
@@ -217,24 +242,19 @@ const TimelineRow = ({
 };
 
 const ExperienceSection: React.FC = () => {
-  const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const [openItemId, setOpenItemId] = useState<string | null>(null);
 
   const toggleItem = (id: string) => {
-    setOpenItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    setOpenItemId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <section>
+    <section className="bg-white">
       <div className="mx-auto w-full max-w-[1720px] px-6 py-20 md:px-12 lg:px-[10vw]">
         <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-[clamp(1.8rem,3vw,2.4rem)] font-semibold tracking-[-0.04em] text-black">
-              My journey
+            <h2 className="text-[clamp(1.8rem,3vw,2.8rem)] font-semibold tracking-[-0.04em] text-black">
+              Experience
             </h2>
           </div>
 
@@ -242,7 +262,7 @@ const ExperienceSection: React.FC = () => {
             href={RESUME_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-black/72 transition duration-300 hover:border-black/20 hover:bg-black/[0.02]"
+            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-black/72 transition duration-300 hover:border-black/20 hover:bg-black/[0.02] md:px-5 md:py-3"
           >
             View my resume
             <span>↗</span>
@@ -251,7 +271,7 @@ const ExperienceSection: React.FC = () => {
 
         <div>
           <div className="mb-5">
-            <p className="text-[14px] font-semibold uppercase tracking-[0.12em] text-black/35">
+            <p className="text-[14px] font-medium uppercase tracking-[0.22em] text-black/35">
               Work experience
             </p>
           </div>
@@ -261,7 +281,7 @@ const ExperienceSection: React.FC = () => {
               <TimelineRow
                 key={item.id}
                 item={item}
-                isOpen={openItems.has(item.id)}
+                isOpen={openItemId === item.id}
                 onToggle={() => toggleItem(item.id)}
               />
             ))}
@@ -270,7 +290,7 @@ const ExperienceSection: React.FC = () => {
 
         <div className="mt-20">
           <div className="mb-5">
-            <p className="text-[14px] font-semibold uppercase tracking-[0.12em] text-black/35">
+            <p className="text-[14px] font-medium uppercase tracking-[0.22em] text-black/35">
               Education
             </p>
           </div>
@@ -280,7 +300,7 @@ const ExperienceSection: React.FC = () => {
               <TimelineRow
                 key={item.id}
                 item={item}
-                isOpen={openItems.has(item.id)}
+                isOpen={openItemId === item.id}
                 onToggle={() => toggleItem(item.id)}
               />
             ))}

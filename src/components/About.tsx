@@ -5,7 +5,7 @@ import portraitImg2 from '../assets/about-img-2.png';
 import portraitImg3 from '../assets/about-img-3.png';
 import portraitImg4 from '../assets/about-img-4.png';
 
-const focusAreas = ['Fintech', 'Mobility', 'B2C & B2B Workflows', 'Product Thinking'];
+// const focusAreas = ['Fintech', 'Mobility', 'B2C & B2B Workflows', 'Product Thinking'];
 
 const About: React.FC = () => {
 
@@ -106,7 +106,7 @@ useEffect(() => {
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-2">
+              {/* <div className="mt-8 flex flex-wrap gap-2">
                 {focusAreas.map((item) => (
                   <span
                     key={item}
@@ -115,7 +115,7 @@ useEffect(() => {
                     {item}
                   </span>
                 ))}
-              </div>
+              </div> */}
 
               {/* <div className="mt-8">
                 <a

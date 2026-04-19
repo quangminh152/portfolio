@@ -345,21 +345,14 @@ function CountUp({
 
 const Section = ({
   id,
-  eyebrow,
   title,
   children,
 }: {
   id: string;
-  eyebrow?: string;
   title: string;
   children: React.ReactNode;
 }) => (
   <section id={id} className="scroll-mt-28 border-t border-black/6 py-14 md:py-20">
-    {eyebrow ? (
-      <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
-        {eyebrow}
-      </p>
-    ) : null}
 
     <h2 className="mb-6 text-[clamp(1.8rem,3vw,2.7rem)] font-semibold tracking-[-0.03em] text-black">
       {title}
@@ -732,7 +725,7 @@ const CaseStudyBeClean: React.FC = () => {
 
         <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
           <article className="min-w-0">
-            <Section id="background" eyebrow="01" title="Background">
+            <Section id="background" title="Background">
               <Box>
                 <p>
                   As of 2024, <strong>be</strong> is positioned as a marketplace for hourly workers
@@ -792,7 +785,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="goal" eyebrow="02" title="What’s the goal?">
+            <Section id="goal" title="What’s the goal?">
               <p>
                 The goal of this project was to design a product that could strategically expand
                 the company’s GMV potential while improving retention and long-term customer value.
@@ -806,7 +799,7 @@ const CaseStudyBeClean: React.FC = () => {
               />
             </Section>
 
-            <Section id="success" eyebrow="03" title="Measuring the success">
+            <Section id="success" title="Measuring the success">
               <div className="grid gap-10 lg:grid-cols-2">
                 <div>
                   <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Product metrics</h3>
@@ -834,7 +827,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="insights" eyebrow="04" title="Gathering the insights">
+            <Section id="insights" title="Gathering the insights">
               <p>
                 To shape the MVP, I focused on understanding how users currently booked cleaning
                 services, what frustrations existed in the market, and where beClean could create
@@ -903,7 +896,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="competitors" eyebrow="05" title="Analyzing the competitors">
+            <Section id="competitors" title="Analyzing the competitors">
               <p>
                 I focused on the booking flow because it was the core experience we needed to make
                 fast, trustworthy, and easy to understand for first-time users.
@@ -1034,7 +1027,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="draft" eyebrow="06" title="First draft (Happy case)">
+            <Section id="draft" title="First draft (Happy case)">
               <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">
                   Flow chart for booking flow
@@ -1103,7 +1096,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="solution" eyebrow="07" title="Final Solution for MVP">
+            <Section id="solution" title="Final Solution for MVP">
               <p>
                 After usability testing, the team chose <strong>Option 2</strong>. Even though it
                 introduced one extra step, it reduced cognitive load on each screen, improved user
@@ -1123,7 +1116,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="impact" eyebrow="08" title="Impact post launch">
+            <Section id="impact" title="Impact post launch">
               <p className="max-w-3xl">
                 After launch near the end of 2024, beClean showed strong early traction in under a
                 year. To make the results feel more tangible, I’m highlighting the metrics that best
@@ -1151,7 +1144,7 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </Section>
 
-            <Section id="next" eyebrow="09" title="What’s next?">
+            <Section id="next" title="What’s next?">
               <p>
                 After the first MVP launch, one of the strongest user needs became clear:
                 people wanted to rebook cleaners they already trusted. Based on that insight,
