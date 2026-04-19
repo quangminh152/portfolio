@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import portraitImg from '../assets/IMG_4467.png';
 import ExperienceSection from './ExperienceSection';
 import portraitImg1 from '../assets/about-img-1.png';
 import portraitImg2 from '../assets/about-img-2.png';

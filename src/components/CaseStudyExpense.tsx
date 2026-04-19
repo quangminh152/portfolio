@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import expenseCover from '../assets/expense-cover.png';
 import expenseOld from '../assets/expense-old.png';
 import expenseChurn1 from '../assets/expense-churn1.png';
@@ -295,9 +295,9 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Box = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-[28px] border border-black/8 bg-white p-6 md:p-8">{children}</div>
-);
+// const Box = ({ children }: { children: React.ReactNode }) => (
+//   <div className="rounded-[28px] border border-black/8 bg-white p-6 md:p-8">{children}</div>
+// );
 
 const BulletList = ({ items }: { items: string[] }) => (
   <ul className="space-y-3">

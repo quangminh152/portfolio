@@ -96,7 +96,7 @@ interface ProjectCardProps {
   accentColor?: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, accentColor = '#111111' }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 

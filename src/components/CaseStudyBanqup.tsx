@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import banqupCover from '../assets/banqup-cover.png';
 import beCleanCover from '../assets/beclean.png';
 import bounceCover from '../assets/bounce-multiple-vehicles.png';
@@ -110,9 +110,9 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Box = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-[28px] border border-black/8 bg-white p-6 md:p-8">{children}</div>
-);
+// const Box = ({ children }: { children: React.ReactNode }) => (
+//   <div className="rounded-[28px] border border-black/8 bg-white p-6 md:p-8">{children}</div>
+// );
 
 const BulletList = ({ items }: { items: string[] }) => (
   <ul className="space-y-3">

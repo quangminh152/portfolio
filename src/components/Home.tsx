@@ -40,15 +40,15 @@
 import React from 'react';
 import Hero from './Hero';
 import ProjectCard from './ProjectCard';
-import PrivateWorkCallout from './PrivateWorkCallout';
+// import PrivateWorkCallout from './PrivateWorkCallout';
 import ExperienceSection from './ExperienceSection';
 import { SELECTED_WORK } from '../constants';
 
-const selectedOutcomes = [
-  { value: '+400%', label: 'GMV growth' },
-  { value: '80k+', label: 'additional monthly trips' },
-  { value: '+12%', label: 'CTR uplift' },
-];
+// const selectedOutcomes = [
+//   { value: '+400%', label: 'GMV growth' },
+//   { value: '80k+', label: 'additional monthly trips' },
+//   { value: '+12%', label: 'CTR uplift' },
+// ];
 
 const Home: React.FC = () => {
   const featuredProject = SELECTED_WORK.find((project) => project.featured);
