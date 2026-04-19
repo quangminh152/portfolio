@@ -120,6 +120,19 @@ const LogoBadge = ({
   );
 };
 
+const ExpandIcon = ({ open }: { open: boolean }) => {
+  return (
+    <span className="relative block h-9 w-9 rounded-full border border-black/10 bg-white">
+      <span className="absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-black/65" />
+      <span
+        className={`absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-black/65 transition-opacity duration-300 ${
+          open ? 'opacity-0' : 'opacity-100'
+        }`}
+      />
+    </span>
+  );
+};
+
 const TimelineRow = ({
   item,
   isOpen,
@@ -134,69 +147,71 @@ const TimelineRow = ({
       <button
         type="button"
         onClick={onToggle}
-        className="w-full px-6 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015]"
+        className="w-full appearance-none bg-transparent px-6 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015] [font:inherit]"
       >
-        <div className="flex items-start gap-5">
+        <span className="flex items-start gap-5">
           <LogoBadge src={item.logoSrc} fallback={item.logoFallback} />
 
-          <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-6">
-              <div className="min-w-0">
-                <h3 className="text-[clamp(1.3rem,2vw,1.45rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-black">
+          <span className="min-w-0 flex-1">
+            <span className="flex items-start justify-between gap-6">
+              <span className="min-w-0">
+                <span className="block text-[clamp(1.3rem,2vw,1.45rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-black">
                   {item.companyLine}
-                </h3>
-                <p className="mt-2 text-[18px] font-medium leading-7 text-black/68">
+                </span>
+                <span className="mt-2 block text-[18px] font-medium leading-7 text-black/68">
                   {item.role}
-                </p>
-                <p className="mt-1 text-[16px] leading-7 text-black/46">{item.period}</p>
-              </div>
-
-              <span className="mt-1 shrink-0 text-[30px] font-light leading-none text-black/72">
-                {isOpen ? '×' : '+'}
+                </span>
+                <span className="mt-1 block text-[16px] leading-7 text-black/46">
+                  {item.period}
+                </span>
               </span>
-            </div>
 
-            <div
-              className={`grid overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                isOpen ? 'grid-rows-[1fr] pt-4 opacity-100' : 'grid-rows-[0fr] opacity-0'
-              }`}
-            >
-              <div className="min-h-0">
-                {item.intro ? (
-                  <p className="max-w-full text-[18px] font-medium leading-8 text-black/82">
-                    {item.intro}
-                  </p>
-                ) : null}
-
-                {item.description ? (
-                  <p className="mt-2 max-w-full text-[16px] leading-8 text-black/68">
-                    {item.description}
-                  </p>
-                ) : null}
-
-                {item.bullets?.length ? (
-                  <ul className="mt-3 space-y-1">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3">
-                        <span className=" h-1.5 w-1.5 shrink-0 rounded-full bg-black/28" />
-                        <span className="max-w-full text-[16px] leading-8 text-black/68">
-                          {bullet}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                {item.highlight ? (
-                  <p className="mt-5 text-[16px] font-medium leading-8 text-black/82">
-                    {item.highlight}
-                  </p>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
+              <span className="mt-1 shrink-0">
+                <ExpandIcon open={isOpen} />
+              </span>
+            </span>
+          </span>
+        </span>
       </button>
+
+      <div
+        className={`overflow-hidden px-6 transition-[max-height,opacity,padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isOpen ? 'max-h-[1000px] pb-6 opacity-100' : 'max-h-0 pb-0 opacity-0'
+        }`}
+      >
+        <div className="pl-[72px]">
+          {item.intro ? (
+            <p className="max-w-full text-[18px] font-medium leading-8 text-black/82">
+              {item.intro}
+            </p>
+          ) : null}
+
+          {item.description ? (
+            <p className="mt-2 max-w-full text-[16px] leading-8 text-black/68">
+              {item.description}
+            </p>
+          ) : null}
+
+          {item.bullets?.length ? (
+            <ul className="mt-3 space-y-1">
+              {item.bullets.map((bullet) => (
+                <li key={bullet} className="flex gap-3">
+                  <span className="mt-[12px] h-1.5 w-1.5 shrink-0 rounded-full bg-black/28" />
+                  <span className="max-w-full text-[16px] leading-8 text-black/68">
+                    {bullet}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {item.highlight ? (
+            <p className="mt-5 text-[16px] font-medium leading-8 text-black/82">
+              {item.highlight}
+            </p>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 };
