@@ -19,7 +19,7 @@ export default function About() {
 
           <p>
             Currently, I'm designing mobile experiences at{' '}
-            <span className="font-semibold text-[#111]">Unifiedpost Group</span>, simplifying complex
+            <span className="font-semibold text-[#111]">Banqup Group</span>, simplifying complex
             B2B invoicing for the European market.
           </p>
 
