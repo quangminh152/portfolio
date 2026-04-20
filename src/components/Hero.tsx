@@ -131,11 +131,11 @@ const Hero: React.FC = () => {
         <div className="hero-glow absolute right-[12%] top-[24%] h-[220px] w-[220px] rounded-full bg-black/[0.02] blur-[90px]" />
       </div>
 
-      <div className="mx-auto min-h-[100svh] w-full max-w-[1920px] px-4 pt-24 pb-0 md:px-12 md:pt-32 lg:px-[10vw] xl:pt-36">
-        <div className="relative flex min-h-[calc(100svh-7rem)] items-start justify-center pt-[18vh] md:min-h-[calc(100svh-8rem)] md:pt-[12vh]">
+      <div className="mx-auto flex min-h-[100svh] w-full max-w-[1920px] px-4 py-24 md:px-12 md:py-32 lg:px-[10vw] xl:py-36">
+        <div className="relative flex w-full flex-1 items-center justify-center">
           <div className="flex max-w-[1480px] flex-col items-center text-center">
             <p
-              className={`hero-copy mb-5 text-[20px] font-medium leading-[1.2] tracking-[-0.02em] text-black/62 md:text-[clamp(1rem,1.6vw,12rem)] md:tracking-[-0.025em] ${
+              className={`hero-copy mb-5 text-[32px] font-medium leading-[1.2] tracking-[-0.02em] text-black/62 md:tracking-[-0.025em] ${
                 isLoaded ? 'is-visible' : ''
               }`}
               style={{ animationDelay: '60ms' }}
