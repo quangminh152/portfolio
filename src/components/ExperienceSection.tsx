@@ -165,7 +165,7 @@ const TimelineRow = ({
       <button
         type="button"
         onClick={onToggle}
-        className="w-full appearance-none bg-transparent px-0 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015] [font:inherit] md:py-7"
+        className="w-full appearance-none bg-transparent px-6 py-6 text-left transition-colors duration-300 hover:bg-black/[0.015] [font:inherit] md:py-7"
       >
         <span className="flex items-start gap-4 md:gap-5">
           <LogoBadge src={item.logoSrc} fallback={item.logoFallback} />
@@ -177,7 +177,7 @@ const TimelineRow = ({
                   {item.companyLine}
                 </span>
 
-                <span className="mt-1.5 block text-[16px] font-medium leading-7 text-black/62 md:mt-2 md:text-[17px]">
+                <span className="mt-1.5 block text-[16px] font-medium leading-7 text-black md:mt-2 md:text-[17px]">
                   {item.role}
                 </span>
 
@@ -195,7 +195,7 @@ const TimelineRow = ({
       </button>
 
       <div
-        className="overflow-hidden"
+        className="overflow-hidden px-6"
         style={{
           height: isOpen ? `${contentHeight}px` : '0px',
           opacity: isOpen ? 1 : 0,
@@ -206,7 +206,7 @@ const TimelineRow = ({
       >
         <div ref={contentRef} className="px-0 pb-6 pl-[68px] pt-1 md:pl-[76px]">
           {item.intro ? (
-            <p className="max-w-full text-[17px] font-medium leading-8 text-black/82 md:text-[18px]">
+            <p className="max-w-full text-[17px] font-medium leading-8 text-black md:text-[18px]">
               {item.intro}
             </p>
           ) : null}
@@ -231,7 +231,7 @@ const TimelineRow = ({
           ) : null}
 
           {item.highlight ? (
-            <p className="mt-5 text-[15px] font-medium leading-8 text-black/82 md:text-[16px]">
+            <p className="mt-5 text-[15px] font-semibold leading-8 text-black md:text-[16px]">
               {item.highlight}
             </p>
           ) : null}

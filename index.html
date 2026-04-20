@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minh Do | Product Designer</title>
+    <script>
+        (() => {
+            try {
+                const storageKey = 'portfolio-theme';
+                const storedTheme = localStorage.getItem(storageKey);
+                const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : systemTheme;
+
+                document.documentElement.dataset.theme = theme;
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+                document.documentElement.style.colorScheme = theme;
+            } catch {
+                document.documentElement.dataset.theme = 'light';
+            }
+        })();
+    </script>
+    <style>
+        html[data-theme='dark'],
+        html[data-theme='dark'] body {
+            background: #0f1011;
+            color: #f3f4f6;
+        }
+    </style>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

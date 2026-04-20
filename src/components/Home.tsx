@@ -132,7 +132,7 @@ const Home: React.FC = () => {
             Drop me an email at{' '}
             <a
               href="mailto:quangminh.do152@gmail.com"
-              className="font-semibold underline decoration-black/18 underline-offset-[6px] transition hover:opacity-70"
+              className="font-semibold underline text-black underline-offset-[6px] transition hover:opacity-70"
             >
               quangminh.do152@gmail.com
             </a>{' '}
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
               href="https://www.linkedin.com/in/minhdo15/"
               target="_blank"
               rel="noreferrer"
-              className="font-semibold underline decoration-black/18 underline-offset-[6px] transition hover:opacity-70"
+              className="font-semibold underline text-black underline-offset-[6px] transition hover:opacity-70"
             >
               LinkedIn
             </a>.

@@ -10,6 +10,7 @@ import CaseStudyBeClean from './components/CaseStudyBeClean';
 import CaseStudyBanqup from './components/CaseStudyBanqup';
 import CaseStudyExpense from './components/CaseStudyExpense';
 import SmoothScroll from './components/SmoothScroll';
+import { ThemeProvider } from './theme';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -23,26 +24,28 @@ const ScrollToTop = () => {
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <SmoothScroll />
-      <ScrollToTop />
-      <Header />
+    <ThemeProvider>
+      <Router>
+        <SmoothScroll />
+        <ScrollToTop />
+        <Header />
 
-      <main className="w-full">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+        <main className="w-full">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
 
-          <Route path="/work/beclean" element={<CaseStudyBeClean />} />
-          <Route path="/work/bounce-dispatch" element={<CaseStudyBounce />} />
-          <Route path="/work/home-delivery" element={<CaseStudyDelivery />} />
-          <Route path="/work/banqup" element={<CaseStudyBanqup />} />
-          <Route path="/work/expense" element={<CaseStudyExpense />} />
-        </Routes>
-      </main>
+            <Route path="/work/beclean" element={<CaseStudyBeClean />} />
+            <Route path="/work/bounce-dispatch" element={<CaseStudyBounce />} />
+            <Route path="/work/home-delivery" element={<CaseStudyDelivery />} />
+            <Route path="/work/banqup" element={<CaseStudyBanqup />} />
+            <Route path="/work/expense" element={<CaseStudyExpense />} />
+          </Routes>
+        </main>
 
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </ThemeProvider>
   );
 };
 

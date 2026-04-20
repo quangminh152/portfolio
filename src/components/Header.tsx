@@ -77,10 +77,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTheme } from '../useTheme';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const isWorkActive =
     location.pathname === '/' || location.pathname.startsWith('/work/');
@@ -99,8 +101,8 @@ const Header: React.FC = () => {
 
   return (
   <header
-    className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-      isScrolled ? 'bg-white/78 backdrop-blur-xl' : 'bg-transparent'
+    className={`site-header fixed top-0 left-0 z-50 w-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      isScrolled ? 'is-scrolled backdrop-blur-xl' : 'bg-transparent'
     }`}
   >
     <div className="mx-auto flex w-full max-w-full items-center justify-between px-4 py-5 md:px-12 md:py-7 lg:px-[10vw]">
@@ -138,6 +140,54 @@ const Header: React.FC = () => {
         >
           Resume
         </a>
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="theme-toggle inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white text-black/72 transition duration-300 hover:border-black/20 hover:bg-black/[0.02]"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          aria-pressed={theme === 'dark'}
+        >
+          <span className="sr-only">
+            Switch to {theme === 'dark' ? 'light' : 'dark'} mode
+          </span>
+
+          {theme === 'dark' ? (
+            <svg
+              aria-hidden="true"
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 3v2.2" />
+              <path d="M12 18.8V21" />
+              <path d="M4.4 4.4 6 6" />
+              <path d="m18 18 1.6 1.6" />
+              <path d="M3 12h2.2" />
+              <path d="M18.8 12H21" />
+              <path d="M4.4 19.6 6 18" />
+              <path d="m18 6 1.6-1.6" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+          ) : (
+            <svg
+              aria-hidden="true"
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M20.3 14.7A7.8 7.8 0 0 1 9.3 3.7 8.8 8.8 0 1 0 20.3 14.7Z" />
+            </svg>
+          )}
+        </button>
       </nav>
     </div>
   </header>
