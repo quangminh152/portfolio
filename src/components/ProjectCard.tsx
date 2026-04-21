@@ -127,7 +127,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   `;
 
   const imageBlock = (
-    <div className="relative mb-5 w-full overflow-hidden rounded-[28px] border-black/8 bg-[#f7f7f7]">
+    <div className="relative mb-5 w-full overflow-hidden rounded-[28px] border-black/8">
       <div
         className="absolute inset-x-0 top-0 z-10 h-px"
         // style={{ backgroundColor: accentColor }}
