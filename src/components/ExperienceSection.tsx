@@ -262,10 +262,15 @@ const ExperienceSection: React.FC = () => {
             href={RESUME_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-black/72 transition duration-300 hover:border-black/20 hover:bg-black/[0.02] md:px-5 md:py-3"
+            className="group inline-flex items-center gap-2 text-[18px] font-medium text-black/72 transition duration-300 hover:text-black"
           >
-            View my resume
-            <span>↗</span>
+            <span className="relative">
+              View my resume
+              <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-black/28 transition-transform duration-300 group-hover:scale-x-100" />
+            </span>
+            <span className="inline-block transition-transform duration-300 group-hover:translate-y-[-1px] group-hover:translate-x-[2px]">
+              ↗
+            </span>
           </a>
         </div>
 
