@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import beCleanCover from '../assets/beclean-cover.png';
 import btaskeeLogo from '../assets/beclean-btaskee-logo.png';
 import jupviecLogo from '../assets/beclean-jupviec-logo.png';
@@ -10,8 +10,10 @@ import flowOption2 from '../assets/beclean-option2.png';
 import finalMvp from '../assets/beclean-final.png';
 import beDeliveryCover from '../assets/bedelivery.png';
 import bounceMultipleVehiclesCover from '../assets/bounce-multiple-vehicles.png';
+import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
+import { usePageReveal } from '../usePageReveal';
 
 type TocItem = {
   id: string;
@@ -159,7 +161,8 @@ const usabilityOpportunities = [
 const impactStats: StatItem[] = [
   {
     value: 400,
-    suffix: '%+',
+    prefix: '>',
+    suffix: '%',
     label: 'GMV growth',
     note: 'Strong early traction after launch.',
   },
@@ -168,7 +171,7 @@ const impactStats: StatItem[] = [
     decimals: 1,
     suffix: 'x',
     label: 'Monthly active users growth',
-    note: 'Demand scaled rapidly in less than a year.',
+    note: 'Demand scaled rapidly within a year.',
   },
   {
     value: 3.7,
@@ -179,14 +182,16 @@ const impactStats: StatItem[] = [
   },
   {
     value: 18,
+    prefix: '↑',
     suffix: '%',
-    label: 'On-time rate increase',
+    label: 'On-time rate',
     note: 'Service reliability improved meaningfully.',
   },
   {
     value: 30,
+    prefix: '↓',
     suffix: '%',
-    label: 'Cleaner-finding time reduction',
+    label: 'Cleaner-finding time',
     note: 'Matching became faster and more efficient.',
   },
   {
@@ -267,32 +272,6 @@ function useActiveSection(items: TocItem[]) {
   }, [items]);
 
   return activeId;
-}
-
-function useInViewOnce<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || inView) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [inView]);
-
-  return { ref, inView };
 }
 
 function CountUp({
@@ -531,47 +510,10 @@ const PreviewImage = ({
   );
 };
 
-const ImpactStatCard = ({
-  item,
-  delay = 0,
-}: {
-  item: StatItem;
-  delay?: number;
-}) => {
-  const { ref, inView } = useInViewOnce<HTMLDivElement>();
-
-  return (
-    <div
-      ref={ref}
-      className={`stat-card rounded-[28px] border border-black/8 bg-white p-6 md:p-7 ${
-        inView ? 'is-visible' : ''
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      <div
-        className="stat-value text-[clamp(2.2rem,5vw,4.5rem)] font-semibold leading-none tracking-[-0.06em] text-black"
-        style={{ animationDelay: `${delay}ms` }}
-      >
-        <CountUp
-          start={inView}
-          value={item.value}
-          decimals={item.decimals}
-          prefix={item.prefix}
-          suffix={item.suffix}
-        />
-      </div>
-
-      <p className="mt-3 text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
-        {item.label}
-      </p>
-      <p className="mt-4 max-w-[28ch] text-sm leading-7 text-black/62">{item.note}</p>
-    </div>
-  );
-};
-
 const CaseStudyBeClean: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
+  const isVisible = usePageReveal();
 
   const description = useMemo(
     () =>
@@ -587,21 +529,6 @@ const CaseStudyBeClean: React.FC = () => {
       <style>
         {`
           html { scroll-behavior: smooth; }
-
-          .fade-in-up {
-            animation: fadeInUp .75s cubic-bezier(.22,1,.36,1) both;
-          }
-
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(22px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
 
           .stat-card {
             opacity: 0;
@@ -670,7 +597,10 @@ const CaseStudyBeClean: React.FC = () => {
       />
 
       <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
-        <section className="fade-in-up">
+        <section
+          className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '80ms' }}
+        >
           <PreviewImage
             src={beCleanCover}
             alt="beClean cover"
@@ -723,17 +653,20 @@ const CaseStudyBeClean: React.FC = () => {
           </div>
         </section>
 
-        <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
+        <div
+          className={`mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '160ms' }}
+        >
           <article className="min-w-0">
             <Section id="background" title="Background">
-              <Box>
-                <p>
+              <div className="rounded-[28px] border border-black/8 bg-black/[0.015] p-6">
+                <p className="text-black">
                   As of 2024, <strong>be</strong> is positioned as a marketplace for hourly workers
                   and hourly staffing seekers, while also expanding its role as a <strong>super app</strong>.
                   One of the first new services introduced in this direction was <strong>beClean</strong>,
                   an hourly home cleaning service.
                 </p>
-              </Box>
+              </div>
 
               <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">
@@ -1123,11 +1056,25 @@ const CaseStudyBeClean: React.FC = () => {
                 reflect both growth and service quality.
               </p>
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {impactStats.map((item, index) => (
-                  <ImpactStatCard key={item.label} item={item} delay={index * 70} />
-                ))}
-              </div>
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {impactStats.map((item, index) => (
+                    <ImpactStatCard
+                      key={item.label}
+                      label={item.label}
+                      note={item.note}
+                      delay={index * 70}
+                      renderValue={(inView) => (
+                        <CountUp
+                          start={inView}
+                          value={item.value}
+                          decimals={item.decimals}
+                          prefix={item.prefix}
+                          suffix={item.suffix}
+                        />
+                      )}
+                    />
+                  ))}
+                </div>
 
               <div className="mt-6 grid gap-4 lg:grid-cols-2">
                 {impactExtra.map((item) => (
@@ -1173,7 +1120,7 @@ const CaseStudyBeClean: React.FC = () => {
                         className={`block text-sm transition-colors ${
                           isActive
                             ? 'font-semibold text-black/72'
-                            : 'font-normal text-black/32 hover:text-black/55'
+                            : 'font-normal text-black/45 hover:text-black/68'
                         }`}
                       >
                         {item.label}
@@ -1186,7 +1133,10 @@ const CaseStudyBeClean: React.FC = () => {
           </aside>
         </div>
 
-        <section className="mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16">
+        <section
+          className={`mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '240ms' }}
+        >
           <h2 className="text-[clamp(1.6rem,2.8vw,2.3rem)] font-semibold tracking-[-0.03em] text-black">
             Other projects
           </h2>

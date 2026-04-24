@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ExperienceSection from './ExperienceSection';
+import ContactSection from './ContactSection';
+import { usePageReveal } from '../usePageReveal';
 import portraitImg1 from '../assets/about-img-1.png';
 import portraitImg2 from '../assets/about-img-2.png';
 import portraitImg3 from '../assets/about-img-3.png';
@@ -8,13 +10,7 @@ import portraitImg4 from '../assets/about-img-4.png';
 // const focusAreas = ['Fintech', 'Mobility', 'B2C & B2B Workflows', 'Product Thinking'];
 
 const About: React.FC = () => {
-
-      const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setIsLoaded(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
+  const isVisible = usePageReveal();
 
   const portraits = [portraitImg1, portraitImg2, portraitImg3, portraitImg4];
 const loopPortraits = [...portraits, portraits[0]];
@@ -34,36 +30,11 @@ useEffect(() => {
   return (
 
     <>
-  <style>
-    {`
-      @keyframes aboutFadeInUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.about-reveal {
-  opacity: 0;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-.about-reveal.is-visible {
-  animation: aboutFadeInUp 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-    `}
-  </style>
-
     <div className="bg-white text-black">
       <section className="bg-white">
         <div className="mx-auto w-full max-w-[1720px] px-6 pt-28 pb-20 md:px-12 md:pt-32 md:pb-24 lg:px-[10vw] xl:pt-36">
           <div
-            className={`mb-10 about-reveal ${isLoaded ? 'is-visible' : ''}`}
+            className={`mb-10 page-reveal ${isVisible ? 'is-visible' : ''}`}
             style={{ animationDelay: '80ms' }}
             >
             {/* <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/35">
@@ -76,7 +47,7 @@ useEffect(() => {
 
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_380px] lg:gap-16 xl:grid-cols-[minmax(0,1.1fr)_420px]">
             <div
-                className={`min-w-0 about-reveal ${isLoaded ? 'is-visible' : ''}`}
+                className={`min-w-0 page-reveal ${isVisible ? 'is-visible' : ''}`}
                 style={{ animationDelay: '160ms' }}
                 >
               <div className="max-w-[72ch] space-y-6 text-[17px] leading-8 text-black/68 md:text-[18px] md:leading-9">
@@ -131,7 +102,7 @@ useEffect(() => {
             </div>
 
             <div
-                className={`min-w-0 about-reveal ${isLoaded ? 'is-visible' : ''}`}
+                className={`min-w-0 page-reveal ${isVisible ? 'is-visible' : ''}`}
                 style={{ animationDelay: '240ms' }}
                 >
                 <div className="overflow-hidden rounded-[32px] border border-black/8 bg-[#f5f5f5]">
@@ -175,47 +146,16 @@ useEffect(() => {
       </section>
 
       <div
-        className={`about-reveal ${isLoaded ? 'is-visible' : ''}`}
+        className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
         style={{ animationDelay: '280ms' }}
         >
         <ExperienceSection />
     </div>
 
-      <section className="bg-white">
-        <div
-            className={`mx-auto w-full max-w-[1720px] px-6 py-24 md:px-12 md:py-32 lg:px-[10vw] about-reveal ${
-                isLoaded ? 'is-visible' : ''
-            }`}
-            style={{ animationDelay: '320ms' }}
-            >
-          {/* <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-black/35">
-            Let’s connect
-          </p> */}
-
-          <h2 className="max-w-4xl text-[clamp(2.2rem,4.6vw,4.2rem)] font-semibold leading-[1.02] tracking-[-0.05em] text-black">
-            Let’s connect.
-          </h2>
-
-          <p className="mt-8 max-w-3xl text-[18px] leading-8 text-black/62">
-            Drop me an email at{' '}
-            <a
-              href="mailto:quangminh.do152@gmail.com"
-              className="font-semibold underline decoration-black/18 text-black underline-offset-[6px] transition hover:opacity-70"
-            >
-              quangminh.do152@gmail.com
-            </a>{' '}
-            or connect with me on{' '}
-            <a
-              href="https://www.linkedin.com/in/minhdo15/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold underline decoration-black/18 text-black underline-offset-[6px] transition hover:opacity-70"
-            >
-              LinkedIn
-            </a>.
-          </p>
-        </div>
-      </section>
+      <ContactSection
+        className={`bg-white page-reveal ${isVisible ? 'is-visible' : ''}`}
+        style={{ animationDelay: '320ms' }}
+      />
     </div>
 
     </>

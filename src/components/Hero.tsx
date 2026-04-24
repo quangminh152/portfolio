@@ -135,7 +135,7 @@ const Hero: React.FC = () => {
         <div className="relative flex w-full flex-1 items-center justify-center">
           <div className="flex max-w-[1480px] flex-col items-center text-center">
             <p
-              className={`hero-copy mb-5 text-[32px] font-medium leading-[1.2] tracking-[-0.02em] text-black/62 md:tracking-[-0.025em] ${
+              className={`hero-copy mb-5 text-[32px] font-medium leading-[1.2] tracking-[-0.02em] text-black/68 md:tracking-[-0.025em] ${
                 isLoaded ? 'is-visible' : ''
               }`}
               style={{ animationDelay: '60ms' }}

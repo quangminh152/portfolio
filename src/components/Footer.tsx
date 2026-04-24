@@ -34,10 +34,16 @@
 
 import React from 'react';
 import { SOCIAL_LINKS } from '../constants';
+import { usePageReveal } from '../usePageReveal';
 
 const Footer: React.FC = () => {
+  const isVisible = usePageReveal();
+
   return (
-    <footer className="bg-white">
+    <footer
+      className={`bg-white page-reveal ${isVisible ? 'is-visible' : ''}`}
+      style={{ animationDelay: '200ms' }}
+    >
       <div className="mx-auto w-full max-w-full px-6 pb-14 md:px-12 lg:px-[10vw]">
         <div className="flex flex-col gap-6 border-t border-[#EEE] pt-8 text-[11px] uppercase tracking-[0.18em] text-[#999] md:flex-row md:items-center md:justify-between">
           <span>© 2026 Minh Do</span>

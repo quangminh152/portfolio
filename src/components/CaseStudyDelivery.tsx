@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import deliveryCover from '../assets/bedelivery-cover.png';
 import beDeliveryAhamoveLogo from '../assets/bedelivery-ahamove-logo.png';
 import beDeliveryAhamove from '../assets/bedelivery-ahamove.png';
@@ -18,8 +18,10 @@ import beDeliveryStructure from '../assets/bedelivery-structure.png';
 import beDeliveryTesting from '../assets/bedelivery-testing.png';
 import beCleanCover from '../assets/beclean.png';
 import bounceCover from '../assets/bounce-multiple-vehicles.png';
+import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
+import { usePageReveal } from '../usePageReveal';
 
 type TocItem = {
   id: string;
@@ -250,14 +252,14 @@ const resultStats: StatItem[] = [
     value: 12,
     prefix: '↑',
     suffix: '%',
-    label: 'CTR uplift',
+    label: 'CTR growth',
     note: 'CTR to the input address screen increased by around 12% for both new options versus the old version.',
   },
   {
     value: 6,
     prefix: '↑',
     suffix: '%',
-    label: 'CVR uplift',
+    label: 'CVR growth',
     note: 'Order creation conversion increased by roughly 6% compared with the previous design.',
   },
 ];
@@ -324,32 +326,6 @@ function useActiveSection(items: TocItem[]) {
   }, [items]);
 
   return activeId;
-}
-
-function useInViewOnce<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || inView) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [inView]);
-
-  return { ref, inView };
 }
 
 function CountUp({
@@ -710,47 +686,10 @@ const OptionBlock = ({
   </div>
 );
 
-const ImpactStatCard = ({
-  item,
-  delay = 0,
-}: {
-  item: StatItem;
-  delay?: number;
-}) => {
-  const { ref, inView } = useInViewOnce<HTMLDivElement>();
-
-  return (
-    <div
-      ref={ref}
-      className={`stat-card rounded-[28px] border border-black/8 bg-white p-6 md:p-7 ${
-        inView ? 'is-visible' : ''
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      <div
-        className="stat-value text-[clamp(2.2rem,5vw,4.5rem)] font-semibold leading-none tracking-[-0.06em] text-black"
-        style={{ animationDelay: `${delay}ms` }}
-      >
-        <CountUp
-          start={inView}
-          value={item.value}
-          decimals={item.decimals}
-          prefix={item.prefix}
-          suffix={item.suffix}
-        />
-      </div>
-
-      <p className="mt-3 text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
-        {item.label}
-      </p>
-      <p className="mt-4 max-w-[28ch] text-sm leading-7 text-black/62">{item.note}</p>
-    </div>
-  );
-};
-
 const CaseStudyDelivery: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
+  const isVisible = usePageReveal();
 
   const description = useMemo(
     () =>
@@ -766,21 +705,6 @@ const CaseStudyDelivery: React.FC = () => {
       <style>
         {`
           html { scroll-behavior: smooth; }
-
-          .fade-in-up {
-            animation: fadeInUp .75s cubic-bezier(.22,1,.36,1) both;
-          }
-
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(22px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
 
           .stat-card {
             opacity: 0;
@@ -845,7 +769,10 @@ const CaseStudyDelivery: React.FC = () => {
       />
 
       <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
-        <section className="fade-in-up">
+        <section
+          className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '80ms' }}
+        >
           <PreviewImage
             src={deliveryCover}
             alt="beDelivery cover"
@@ -900,19 +827,22 @@ const CaseStudyDelivery: React.FC = () => {
           </div>
         </section>
 
-        <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
+        <div
+          className={`mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '160ms' }}
+        >
           <article className="min-w-0">
             <Section id="background" title="Background">
-              <Box>
-                <p>
+              <div className="rounded-[28px] border border-black/8 bg-black/[0.015] p-6">
+                <p className="text-black">
                   <strong>beDelivery</strong> is one of be’s main and fastest-growing services,
                   offering convenient package delivery across Vietnam.
                 </p>
-                <p className="mt-4">
+                <p className="mt-2 text-black">
                   At the time, the service had two primary offerings: <strong>Instant Delivery</strong>
                   {' '}for immediate needs and <strong>2H Delivery</strong> for delivery within two hours.
                 </p>
-              </Box>
+              </div>
             </Section>
 
             <Section id="issue" title="What’s the issue?">
@@ -1098,11 +1028,25 @@ const CaseStudyDelivery: React.FC = () => {
                 />
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 pt-4">
-                {resultStats.map((item, index) => (
-                  <ImpactStatCard key={item.label} item={item} delay={index * 90} />
-                ))}
-              </div>
+                <div className="grid gap-4 sm:grid-cols-2 pt-4">
+                  {resultStats.map((item, index) => (
+                    <ImpactStatCard
+                      key={item.label}
+                      label={item.label}
+                      note={item.note}
+                      delay={index * 90}
+                      renderValue={(inView) => (
+                        <CountUp
+                          start={inView}
+                          value={item.value}
+                          decimals={item.decimals}
+                          prefix={item.prefix}
+                          suffix={item.suffix}
+                        />
+                      )}
+                    />
+                  ))}
+                </div>
 
               <div className="pt-2">
                 <p>
@@ -1154,7 +1098,7 @@ const CaseStudyDelivery: React.FC = () => {
                         className={`block text-sm transition-colors ${
                           isActive
                             ? 'font-semibold text-black/72'
-                            : 'font-normal text-black/32 hover:text-black/55'
+                            : 'font-normal text-black/45 hover:text-black/68'
                         }`}
                       >
                         {item.label}
@@ -1167,7 +1111,10 @@ const CaseStudyDelivery: React.FC = () => {
           </aside>
         </div>
 
-        <section className="mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16">
+        <section
+          className={`mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '240ms' }}
+        >
           <h2 className="text-[clamp(1.6rem,2.8vw,2.3rem)] font-semibold tracking-[-0.03em] text-black">
             Other projects
           </h2>

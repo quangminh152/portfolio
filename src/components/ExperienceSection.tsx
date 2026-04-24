@@ -21,6 +21,11 @@ type TimelineEntry = {
 const RESUME_URL =
   'https://drive.google.com/file/d/1M0Tlwq7YOs0olPEkVoLKGfujj29akQY6/view?usp=sharing';
 
+type ExperienceSectionProps = {
+  className?: string;
+  style?: React.CSSProperties;
+};
+
 const experienceItems: TimelineEntry[] = [
   {
     id: 'banqup',
@@ -241,7 +246,10 @@ const TimelineRow = ({
   );
 };
 
-const ExperienceSection: React.FC = () => {
+const ExperienceSection: React.FC<ExperienceSectionProps> = ({
+  className = '',
+  style,
+}) => {
   const [openItemId, setOpenItemId] = useState<string | null>(null);
 
   const toggleItem = (id: string) => {
@@ -249,7 +257,7 @@ const ExperienceSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-white">
+    <section className={`bg-white ${className}`.trim()} style={style}>
       <div className="mx-auto w-full max-w-[1720px] px-6 py-20 md:px-12 lg:px-[10vw]">
         <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>

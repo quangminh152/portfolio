@@ -42,7 +42,9 @@ import Hero from './Hero';
 import ProjectCard from './ProjectCard';
 // import PrivateWorkCallout from './PrivateWorkCallout';
 import ExperienceSection from './ExperienceSection';
+import ContactSection from './ContactSection';
 import { SELECTED_WORK } from '../constants';
+import { usePageReveal } from '../usePageReveal';
 
 // const selectedOutcomes = [
 //   { value: '+400%', label: 'GMV growth' },
@@ -53,6 +55,7 @@ import { SELECTED_WORK } from '../constants';
 const Home: React.FC = () => {
   const featuredProject = SELECTED_WORK.find((project) => project.featured);
   const secondaryProjects = SELECTED_WORK.filter((project) => !project.featured);
+  const isVisible = usePageReveal();
 
   return (
     <>
@@ -79,7 +82,11 @@ const Home: React.FC = () => {
         </div> */}
       </section>
 
-      <section id="work" className="bg-white">
+      <section
+        id="work"
+        className={`bg-white page-reveal ${isVisible ? 'is-visible' : ''}`}
+        style={{ animationDelay: '80ms' }}
+      >
         <div className="mx-auto w-full max-w-[1720px] px-6 py-20 md:px-12 lg:px-[10vw]">
           <div className="mb-10">
             {/* <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-black/35">
@@ -116,38 +123,15 @@ const Home: React.FC = () => {
 
       {/* <PrivateWorkCallout /> */}
 
-      <ExperienceSection />
+      <ExperienceSection
+        className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
+        style={{ animationDelay: '160ms' }}
+      />
 
-      <section>
-        <div className="mx-auto w-full max-w-[1720px] px-6 py-24 md:px-12 md:py-32 lg:px-[10vw]">
-          {/* <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-black/35">
-            Contact
-          </p> */}
-
-          <h2 className="max-w-4xl text-[clamp(2.4rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.05em] text-black">
-            Let's connect.
-          </h2>
-
-          <p className="mt-8 max-w-3xl text-[18px] leading-8 text-black/62">
-            Drop me an email at{' '}
-            <a
-              href="mailto:quangminh.do152@gmail.com"
-              className="font-semibold underline text-black underline-offset-[6px] transition hover:opacity-70"
-            >
-              quangminh.do152@gmail.com
-            </a>{' '}
-            or connect with me on{' '}
-            <a
-              href="https://www.linkedin.com/in/minhdo15/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold underline text-black underline-offset-[6px] transition hover:opacity-70"
-            >
-              LinkedIn
-            </a>.
-          </p>
-        </div>
-      </section>
+      <ContactSection
+        className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
+        style={{ animationDelay: '240ms' }}
+      />
     </>
   );
 };

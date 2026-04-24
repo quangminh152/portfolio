@@ -4,6 +4,7 @@ import beCleanCover from '../assets/beclean.png';
 import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
+import { usePageReveal } from '../usePageReveal';
 
 
 type TocItem = {
@@ -230,6 +231,7 @@ const PreviewImage = ({
 const CaseStudyBanqup: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
+  const isVisible = usePageReveal();
 
   const description = useMemo(
     () =>
@@ -245,21 +247,6 @@ const CaseStudyBanqup: React.FC = () => {
       <style>
         {`
           html { scroll-behavior: smooth; }
-
-          .fade-in-up {
-            animation: fadeInUp .75s cubic-bezier(.22,1,.36,1) both;
-          }
-
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(22px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
 
           @keyframes lightboxFade {
             from { opacity: 0; }
@@ -287,7 +274,10 @@ const CaseStudyBanqup: React.FC = () => {
       />
 
       <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
-        <section className="fade-in-up">
+        <section
+          className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '80ms' }}
+        >
           <PreviewImage
             src={banqupCover}
             alt="Banqup cover"
@@ -352,7 +342,10 @@ const CaseStudyBanqup: React.FC = () => {
           </div>
         </section>
 
-        <div className="mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16">
+        <div
+          className={`mt-16 grid gap-12 xl:grid-cols-[minmax(0,1fr)_180px] 2xl:gap-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '160ms' }}
+        >
           <article className="min-w-0">
             <Section id="overview" title="Overview">
               
@@ -441,7 +434,7 @@ const CaseStudyBanqup: React.FC = () => {
                         className={`block text-sm transition-colors ${
                           isActive
                             ? 'font-semibold text-black/72'
-                            : 'font-normal text-black/32 hover:text-black/55'
+                            : 'font-normal text-black/45 hover:text-black/68'
                         }`}
                       >
                         {item.label}
@@ -454,7 +447,10 @@ const CaseStudyBanqup: React.FC = () => {
           </aside>
                 </div>
 
-        <section className="mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16">
+        <section
+          className={`mt-28 border-t border-black/6 pt-14 md:mt-32 md:pt-16 page-reveal ${isVisible ? 'is-visible' : ''}`}
+          style={{ animationDelay: '240ms' }}
+        >
           <h2 className="text-[clamp(1.6rem,2.8vw,2.3rem)] font-semibold tracking-[-0.03em] text-black">
             Case studies from Be Group
           </h2>
