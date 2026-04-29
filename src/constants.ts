@@ -160,7 +160,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const SELECTED_WORK: Project[] = [
   {
     title: 'beClean - Hourly Cleaning Service',
-    desc: 'Led end-to-end research and product design for beClean, a new on-demand home cleaning service from be, shaping the MVP booking experience from early discovery to launch.',
+    desc: 'Led MVP from discovery to launch, achieving 400% GMV growth and 3.7x MAU in under a year.',
     img: beCleanCover,
     link: '/work/beclean',
     // meta: 'New Product · UX Research · Product Design',

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import expenseCover from '../assets/expense-cover.png';
+import expenseCoverDark from '../assets/expense-cover-dark.png';
 import expenseOld from '../assets/expense-old.png';
 import expenseChurn1 from '../assets/expense-churn1.png';
 import expenseChurnStep1 from '../assets/expense-churn1-step1.png';
@@ -18,6 +19,7 @@ import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
+import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -449,9 +451,11 @@ const SegmentCard = ({
 );
 
 const CaseStudyExpense: React.FC = () => {
+  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
+  const coverImage = theme === 'dark' ? expenseCoverDark : expenseCover;
 
   const description = useMemo(
     () =>
@@ -493,27 +497,27 @@ const CaseStudyExpense: React.FC = () => {
         onClose={closePreview}
       />
 
-      <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
+       <div className="mx-auto mt-16 w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
         <section
           className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
           style={{ animationDelay: '80ms' }}
         >
-          <PreviewImage
+          {/* <PreviewImage
             src={assets.cover}
             alt="MoMo Expense Management cover"
             label="cover image"
             ratio="cover"
             onPreview={openPreview}
-          />
+          /> */}
 
-          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="mt-8 mb-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
             <div className="min-w-0">
               {/* <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-black/35">
                 Case Study
               </p> */}
 
               <h1 className="text-[clamp(1.6rem,3vw,2.8rem)] font-semibold leading-[1.18] tracking-[-0.04em] text-black">
-                MoMo - Revamp Expense Management feature
+                Revamp Expense Management on MoMo
               </h1>
 
               <p className="mt-5 max-w-3xl text-base leading-8 text-black/68 md:text-lg">
@@ -550,6 +554,14 @@ const CaseStudyExpense: React.FC = () => {
               </div>
             </div>
           </div>
+
+          <PreviewImage
+            src={coverImage}
+            alt="MoMo Expense Management cover"
+            label="cover image"
+            ratio="cover"
+            onPreview={openPreview}
+          />
         </section>
 
         <div

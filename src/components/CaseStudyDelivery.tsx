@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import deliveryCover from '../assets/bedelivery-cover.png';
+import deliveryCoverDark from '../assets/bedelivery-cover-dark.png';
 import beDeliveryAhamoveLogo from '../assets/bedelivery-ahamove-logo.png';
 import beDeliveryAhamove from '../assets/bedelivery-ahamove.png';
 import beDeliveryCompare from '../assets/bedelivery-compare.png';
@@ -22,6 +23,7 @@ import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
+import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -687,9 +689,11 @@ const OptionBlock = ({
 );
 
 const CaseStudyDelivery: React.FC = () => {
+  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
+  const coverImage = theme === 'dark' ? deliveryCoverDark : deliveryCover;
 
   const description = useMemo(
     () =>
@@ -768,20 +772,20 @@ const CaseStudyDelivery: React.FC = () => {
         onClose={closePreview}
       />
 
-      <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
+      <div className="mx-auto mt-16 w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
         <section
           className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
           style={{ animationDelay: '80ms' }}
         >
-          <PreviewImage
+          {/* <PreviewImage
             src={deliveryCover}
             alt="beDelivery cover"
             label="cover image"
             ratio="cover"
             onPreview={openPreview}
-          />
+          /> */}
 
-          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="mt-8 mb-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
             <div className="min-w-0">
               {/* <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-black/35">
                 Case Study
@@ -825,6 +829,14 @@ const CaseStudyDelivery: React.FC = () => {
               </div>
             </div>
           </div>
+
+          <PreviewImage
+            src={coverImage}
+            alt="beDelivery cover"
+            label="cover image"
+            ratio="cover"
+            onPreview={openPreview}
+          />
         </section>
 
         <div

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import beCleanCover from '../assets/beclean-cover.png';
+import beCleanCoverDark from '../assets/beclean-cover-dark.png';
 import btaskeeLogo from '../assets/beclean-btaskee-logo.png';
 import jupviecLogo from '../assets/beclean-jupviec-logo.png';
 import btaskeeFlow from '../assets/beclean-btaskee.png';
@@ -14,6 +15,7 @@ import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
+import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -511,9 +513,11 @@ const PreviewImage = ({
 };
 
 const CaseStudyBeClean: React.FC = () => {
+  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
+  const coverImage = theme === 'dark' ? beCleanCoverDark : beCleanCover;
 
   const description = useMemo(
     () =>
@@ -596,20 +600,20 @@ const CaseStudyBeClean: React.FC = () => {
         onClose={closePreview}
       />
 
-      <div className="mx-auto w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
+      <div className="mx-auto mt-16 w-full max-w-[1720px] px-6 pb-20 pt-24 md:px-12 lg:px-[10vw] xl:pt-28">
         <section
           className={`page-reveal ${isVisible ? 'is-visible' : ''}`}
           style={{ animationDelay: '80ms' }}
         >
-          <PreviewImage
+          {/* <PreviewImage
             src={beCleanCover}
             alt="beClean cover"
             label="cover image"
             ratio="cover"
             onPreview={openPreview}
-          />
+          /> */}
 
-          <div className="mt-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="mt-8 mb-8 grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start xl:grid-cols-[minmax(0,1fr)_300px]">
             <div className="min-w-0">
               {/* <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-black/35">
                 Case Study
@@ -651,6 +655,14 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
             </div>
           </div>
+
+          <PreviewImage
+            src={coverImage}
+            alt="beClean cover"
+            label="cover image"
+            ratio="cover"
+            onPreview={openPreview}
+          />
         </section>
 
         <div
@@ -720,14 +732,13 @@ const CaseStudyBeClean: React.FC = () => {
 
             <Section id="goal" title="What’s the goal?">
               <p>
-                The goal of this project was to design a product that could strategically expand
-                the company’s GMV potential while improving retention and long-term customer value.
+                How can <strong>be</strong> enter a market dominated by 2 established giants (#1 bTaskee, #2 JupViec) while maintaining the premium brand identity?
               </p>
 
               <BulletList
                 items={[
                   'Research, analyze, and design an MVP customer experience that addresses the most important user needs.',
-                  'Reuse and optimize existing operational flows and resources from the Be Driver App for the cleaners side where possible.',
+                  'Reuse and optimize existing operational flows and resources from the be Driver App for the cleaners side where possible.',
                 ]}
               />
             </Section>
@@ -1031,9 +1042,7 @@ const CaseStudyBeClean: React.FC = () => {
 
             <Section id="solution" title="Final Solution for MVP">
               <p>
-                After usability testing, the team chose <strong>Option 2</strong>. Even though it
-                introduced one extra step, it reduced cognitive load on each screen, improved user
-                focus, and provided a more scalable structure for future features.
+                After usability testing, the team chose <strong>Option 2</strong>. While Option 1 was faster, Option 2 allowed for better data modularity. This meant we could scale the service to include extras like 'Add-ons' (like laundry or pet care) and more features in the future without breaking the API structure.
               </p>
 
               <div className="pt-2">
