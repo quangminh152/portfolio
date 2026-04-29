@@ -17,9 +17,9 @@ import expenseInput from '../assets/expense-input.png';
 import beCleanCover from '../assets/beclean.png';
 import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
+import ThemeCoverPreview from './ThemeCoverPreview';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
-import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -451,11 +451,9 @@ const SegmentCard = ({
 );
 
 const CaseStudyExpense: React.FC = () => {
-  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
-  const coverImage = theme === 'dark' ? expenseCoverDark : expenseCover;
 
   const description = useMemo(
     () =>
@@ -555,11 +553,11 @@ const CaseStudyExpense: React.FC = () => {
             </div>
           </div>
 
-          <PreviewImage
-            src={coverImage}
+          <ThemeCoverPreview
+            lightSrc={expenseCover}
+            darkSrc={expenseCoverDark}
             alt="MoMo Expense Management cover"
             label="cover image"
-            ratio="cover"
             onPreview={openPreview}
           />
         </section>

@@ -16,9 +16,9 @@ import beCleanCover from '../assets/beclean.png';
 import beDeliveryCover from '../assets/bedelivery.png';
 import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
+import ThemeCoverPreview from './ThemeCoverPreview';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
-import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -456,11 +456,9 @@ const PreviewImage = ({
 };
 
 const CaseStudyBounce: React.FC = () => {
-  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
-  const coverImage = theme === 'dark' ? bounceCoverDark : bounceCover;
 
   const description = useMemo(
     () =>
@@ -595,11 +593,11 @@ const CaseStudyBounce: React.FC = () => {
             </div>
           </div>
 
-          <PreviewImage
-            src={coverImage}
+          <ThemeCoverPreview
+            lightSrc={bounceCover}
+            darkSrc={bounceCoverDark}
             alt="Bounce Dispatch cover"
             label="cover image"
-            ratio="cover"
             onPreview={openPreview}
           />
         </section>

@@ -4,17 +4,15 @@ import banqupCoverDark from '../assets/banqup-cover-dark.png';
 import beCleanCover from '../assets/beclean.png';
 import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
+import ThemeCoverPreview from './ThemeCoverPreview';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
-import { useTheme } from '../useTheme';
 
 
 type TocItem = {
   id: string;
   label: string;
 };
-
-type RatioKey = 'cover' | 'wide';
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
@@ -40,11 +38,6 @@ const relatedBeProjects: Project[] = [
     link: '/work/bounce-dispatch',
   },
 ];
-
-const ratioClassMap: Record<RatioKey, string> = {
-  cover: 'aspect-[16/6]',
-  wide: 'aspect-[16/9]',
-};
 
 function useActiveSection(items: TocItem[]) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? '');
@@ -189,53 +182,10 @@ const Lightbox = ({
   );
 };
 
-const PreviewImage = ({
-  src,
-  alt,
-  label,
-  ratio = 'wide',
-  onPreview,
-}: {
-  src?: string;
-  alt: string;
-  label: string;
-  ratio?: RatioKey;
-  onPreview: (src: string, alt: string) => void;
-}) => {
-  const ratioClass = src ? '' : ratioClassMap[ratio];
-
-  if (src) {
-    return (
-      <button
-        type="button"
-        onClick={() => onPreview(src, alt)}
-        className={`group relative block w-full overflow-hidden rounded-[28px] border border-black/8 bg-[#f6f6f6] text-left ${ratioClass}`}
-      >
-        <img src={src} alt={alt} className="block h-auto w-full object-contain" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-transparent opacity-90" />
-      </button>
-    );
-  }
-
-  return (
-    <div
-      className={`relative overflow-hidden rounded-[28px] border border-dashed border-black/12 bg-black/[0.02] ${ratioClass}`}
-    >
-      <div className="relative flex h-full items-center justify-center">
-        <div className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm text-black/45">
-          Replace with {label}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const CaseStudyBanqup: React.FC = () => {
-  const { theme } = useTheme();
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
-  const coverImage = theme === 'dark' ? banqupCoverDark : banqupCover;
 
   const description = useMemo(
     () =>
@@ -345,11 +295,11 @@ const CaseStudyBanqup: React.FC = () => {
             </div>
           </div>
 
-          <PreviewImage
-            src={coverImage}
+          <ThemeCoverPreview
+            lightSrc={banqupCover}
+            darkSrc={banqupCoverDark}
             alt="Banqup cover"
             label="cover image"
-            ratio="cover"
             onPreview={openPreview}
           />
         </section>
