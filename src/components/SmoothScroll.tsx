@@ -1,10 +1,21 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+let lenisInstance: Lenis | null = null;
+
+export const getLenisInstance = () => lenisInstance;
+
 const SmoothScroll = () => {
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches) return;
+    if (mediaQuery.matches) {
+      return () => {
+        window.history.scrollRestoration = previousScrollRestoration;
+      };
+    }
 
     const lenis = new Lenis({
       duration: 1.15,
@@ -14,6 +25,7 @@ const SmoothScroll = () => {
       touchMultiplier: 1,
       infinite: false,
     });
+    lenisInstance = lenis;
 
     let frameId = 0;
 
@@ -26,7 +38,9 @@ const SmoothScroll = () => {
 
     return () => {
       cancelAnimationFrame(frameId);
+      lenisInstance = null;
       lenis.destroy();
+      window.history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
 

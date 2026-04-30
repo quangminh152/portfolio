@@ -9,14 +9,21 @@ import CaseStudyDelivery from './components/CaseStudyDelivery';
 import CaseStudyBeClean from './components/CaseStudyBeClean';
 import CaseStudyBanqup from './components/CaseStudyBanqup';
 import CaseStudyExpense from './components/CaseStudyExpense';
-import SmoothScroll from './components/SmoothScroll';
+import SmoothScroll, { getLenisInstance } from './components/SmoothScroll';
 import { ThemeProvider } from './theme';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const lenis = getLenisInstance();
+
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+      return;
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [pathname]);
 
   return null;
