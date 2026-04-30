@@ -19,6 +19,7 @@ import ProjectCard from './ProjectCard';
 import ThemeCoverPreview from './ThemeCoverPreview';
 import type { Project } from '../types';
 import { usePageReveal } from '../usePageReveal';
+import { useTheme } from '../useTheme';
 
 type TocItem = {
   id: string;
@@ -459,6 +460,7 @@ const CaseStudyBounce: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
+  const { theme } = useTheme();
 
   const description = useMemo(
     () =>
@@ -629,18 +631,24 @@ const CaseStudyBounce: React.FC = () => {
               <NumberedList items={issueSteps} />
 
               <div className="pt-2">
-                <div className="overflow-hidden rounded-[28px] border border-black/8 bg-[#f5f6f7] p-4 md:p-6">
-                  <div className="aspect-[16/9] overflow-hidden rounded-[22px] ">
+                <div
+                  className={`overflow-hidden rounded-[28px] border border-black/8 p-4 md:p-6 ${
+                    theme === 'dark' ? 'bg-[#16181b]' : 'bg-[#f5f6f7]'
+                  }`}
+                >
+                  <div className="aspect-[16/9] overflow-hidden">
                     <button
                       type="button"
                       onClick={() => assets.previousGif && openPreview(assets.previousGif, 'Previous bounce dispatch flow')}
-                      className="flex h-full w-full items-center justify-center"
+                      className="flex h-full w-full items-center justify-center bg-transparent p-0"
                     >
-                      <img
-                        src={assets.previousGif}
-                        alt="Previous bounce dispatch flow"
-                        className="h-full w-full object-contain"
-                      />
+                      <div className="h-full max-w-full overflow-hidden rounded-[24px] bg-white shadow-sm">
+                        <img
+                          src={assets.previousGif}
+                          alt="Previous bounce dispatch flow"
+                          className="block h-full w-auto max-w-full"
+                        />
+                      </div>
                     </button>
                   </div>
                 </div>
