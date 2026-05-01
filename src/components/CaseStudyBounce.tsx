@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import bounceCover from '../assets/bounce-multiple-vehicles-cover.png';
 import bounceCoverDark from '../assets/bounce-multiple-vehicles-cover-dark.png';
-import bounceCompare from '../assets/bounce-compare.png';
 import bounceDidiLogo from '../assets/bounce-didi-logo.png';
 import bounceDidi from '../assets/bounce-didi.png';
 import bounceFlow1 from '../assets/bounce-flow1.png';
@@ -10,6 +9,7 @@ import bounceFlow3 from '../assets/bounce-flow3.png';
 import bounceFlow4 from '../assets/bounce-flow4.png';
 import bounceFlow5 from '../assets/bounce-flow5.png';
 import bounceNext from '../assets/bounce-next.png';
+import bounceMultipleVehiclesNewGif from '../assets/bounce-multiple-vehicles-new.gif';
 import bounceMultipleVehiclesOldGif from '../assets/bounce-multiple-vehicles-old.gif';
 import bounceSolutionStructure from '../assets/bounce-solution-structure.png';
 import beCleanCover from '../assets/beclean.png';
@@ -48,7 +48,7 @@ const tocItems: TocItem[] = [
 
 type AssetMap = {
   previousGif?: string;
-  successChart?: string;
+  updatedGif?: string;
   didiLogo?: string;
   didiFlow1?: string;
   didiFlow2?: string;
@@ -63,7 +63,7 @@ type AssetMap = {
 
 const assets: AssetMap = {
   previousGif: bounceMultipleVehiclesOldGif,
-  successChart: bounceCompare,
+  updatedGif: bounceMultipleVehiclesNewGif,
   didiLogo: bounceDidiLogo,
   didiFlow1: bounceDidi,
   didiFlow2: '',
@@ -456,6 +456,44 @@ const PreviewImage = ({
   );
 };
 
+const BeforeAfterPanel = ({
+  title,
+  src,
+  alt,
+  onPreview,
+  panelClassName,
+  titleClassName,
+}: {
+  title: string;
+  src?: string;
+  alt: string;
+  onPreview: (src: string, alt: string) => void;
+  panelClassName: string;
+  titleClassName: string;
+}) => {
+  if (!src) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => onPreview(src, alt)}
+      className={`group flex h-full w-full flex-col overflow-hidden text-left transition-transform duration-300 hover:-translate-y-1 ${panelClassName}`}
+    >
+      <div className="p-6 mx-4 md:p-12">
+        <div
+          className={`flex min-h-12 w-full items-center justify-center rounded-[18px] px-6 text-center text-[clamp(1.05rem,1.8vw,1.2rem)] font-semibold tracking-[-0.03em] ${titleClassName}`}
+        >
+          {title}
+        </div>
+      </div>
+
+      <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-10 pb-10 md:px-12 md:pb-12">
+        <img src={src} alt={alt} className="block h-full max-w-full rounded-[28px] object-contain" />
+      </div>
+    </button>
+  );
+};
+
 const CaseStudyBounce: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
@@ -792,12 +830,31 @@ const CaseStudyBounce: React.FC = () => {
               </p>
 
               <div className="pt-2">
-                <PreviewImage
-                  src={assets.successChart}
-                  alt="Results comparison chart"
-                  label="results comparison chart"
-                  onPreview={openPreview}
-                />
+                <div className="aspect-square overflow-hidden rounded-[32px] border border-black/8">
+                  <div className="grid h-full w-full grid-cols-2 gap-0">
+                    <BeforeAfterPanel
+                      title="Before"
+                      src={assets.previousGif}
+                      alt="Before bounce dispatch flow"
+                      onPreview={openPreview}
+                      panelClassName="bg-[#38B7FF]/20"
+                      titleClassName={
+                        theme === 'dark'
+                          ? 'bg-[#1698ee] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]'
+                          : 'bg-[#149cee] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]'
+                      }
+                    />
+
+                    <BeforeAfterPanel
+                      title="After"
+                      src={assets.updatedGif}
+                      alt="After bounce dispatch flow"
+                      onPreview={openPreview}
+                      panelClassName="bg-[#38B7FF]/80"
+                      titleClassName="bg-[#edf5fb] text-[#0c3046] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-10 pt-2">
