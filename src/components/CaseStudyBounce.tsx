@@ -479,9 +479,9 @@ const BeforeAfterPanel = ({
       onClick={() => onPreview(src, alt)}
       className={`group flex h-full w-full flex-col overflow-hidden text-left transition-transform duration-300 hover:-translate-y-1 ${panelClassName}`}
     >
-      <div className="p-6 mx-4 md:p-12">
+      <div className="p-8 mx-20 md:p-8">
         <div
-          className={`flex min-h-12 w-full items-center justify-center rounded-[18px] px-6 text-center text-[clamp(1.05rem,1.8vw,1.2rem)] font-semibold tracking-[-0.03em] ${titleClassName}`}
+          className={`flex min-h-10 w-full items-center justify-center rounded-[14px] px-6 text-center text-[clamp(1.05rem,1.8vw,1.125rem)] font-semibold tracking-[-0.03em] ${titleClassName}`}
         >
           {title}
         </div>
@@ -829,8 +829,8 @@ const CaseStudyBounce: React.FC = () => {
                 both the interaction model and edge cases clearly.
               </p>
 
-              <div className="pt-2">
-                <div className="aspect-square overflow-hidden rounded-[32px] border border-black/8">
+              <div className="pt-2 pb-8">
+                <div className="aspect-[4/3] overflow-hidden rounded-[32px] border border-black/8">
                   <div className="grid h-full w-full grid-cols-2 gap-0">
                     <BeforeAfterPanel
                       title="Before"
