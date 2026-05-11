@@ -23,6 +23,7 @@
 // export default Hero;
 
 import React, { useEffect, useState } from 'react';
+import HeroWord from './HeroWord';
 
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -159,13 +160,13 @@ const Hero: React.FC = () => {
                 className={`hero-line block ${isLoaded ? 'is-visible' : ''}`}
                 style={{ animationDelay: '280ms' }}
               >
-                for clarity, scale,
+                for <HeroWord variant="clarity">clarity</HeroWord>, <HeroWord variant="scale">scale</HeroWord>,
               </span>
               <span
                 className={`hero-line block ${isLoaded ? 'is-visible' : ''}`}
                 style={{ animationDelay: '380ms' }}
               >
-                and impact.
+                and <HeroWord variant="impact">impact</HeroWord>.
               </span>
             </h1>
 

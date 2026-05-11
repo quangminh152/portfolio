@@ -72,7 +72,7 @@ useEffect(() => {
                 </p>
 
                 <p>
-                  I care about thoughtful product decisions, structured systems, and interfaces that
+                  I care about thoughtful, data-driven product decisions, structured systems, and interfaces that
                   feel simple even when the logic behind them is complex.
                 </p>
               </div>
