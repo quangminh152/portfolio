@@ -11,9 +11,8 @@
   --color-surface-raised: #ffffff;
   --color-surface-soft: rgba(17, 17, 17, 0.02);
   --color-header-bg: rgba(255, 255, 255, 0.78);
---hero-word-shine-mid: rgba(255, 255, 255, 0.96);
---hero-word-shine-soft: rgba(226, 232, 240, 0.78);
---hero-word-shine-edge: rgba(148, 163, 184, 0.36);
+  --hero-word-clarity-bg: #0f1011;
+  --hero-word-clarity-text: #ffffff;
 
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
@@ -41,9 +40,8 @@ html[data-theme='dark'] {
   --color-surface-raised: #141619;
   --color-surface-soft: rgba(243, 244, 246, 0.055);
   --color-header-bg: rgba(15, 16, 17, 0.76);
---hero-word-shine-mid: rgba(38, 38, 38, 0.92);
---hero-word-shine-soft: rgba(82, 82, 82, 0.68);
---hero-word-shine-edge: rgba(163, 163, 163, 0.28);
+  --hero-word-clarity-bg: #ffffff;
+  --hero-word-clarity-text: #0f1011;
 }
 
 *,
@@ -154,30 +152,21 @@ body,
   display: block;
 }
 
-.hero-word__shine {
+.hero-word__clarity-bg {
   pointer-events: none;
   position: absolute;
-  inset: 0;
-  color: transparent;
-  opacity: 0;
-  background-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    transparent 34%,
-    var(--hero-word-shine-edge) 42%,
-    var(--hero-word-shine-soft) 45%,
-    var(--hero-word-shine-mid) 47%,
-    var(--hero-word-shine-mid) 53%,
-    var(--hero-word-shine-soft) 55%,
-    var(--hero-word-shine-edge) 58%,
-    transparent 66%,
-    transparent 100%
-  );
-  background-repeat: no-repeat;
-  background-size: 200% 100%;
-  background-position: 118% 50%;
-  -webkit-background-clip: text;
-  background-clip: text;
+  inset: 0.08em -0.08em 0.01em -0.04em;
+  border-radius: 0.0em;
+  background: var(--hero-word-clarity-bg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.hero-word__clarity-text {
+  position: relative;
+  z-index: 1;
+  color: inherit;
 }
 
 .hero-word__letter {
@@ -222,26 +211,6 @@ body,
   }
 }
 
-@keyframes heroWordShine {
-  0% {
-    opacity: 0;
-    background-position: 118% 50%;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  78% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    background-position: -118% 50%;
-  }
-}
-
 @keyframes heroWordImpactUnderline {
   0% {
     opacity: 0;
@@ -274,8 +243,20 @@ body,
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .hero-word--clarity:hover .hero-word__shine {
-    animation: heroWordShine 1520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  .hero-word--clarity .hero-word__clarity-bg {
+    transition: transform 380ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  .hero-word--clarity .hero-word__clarity-text {
+    transition: color 340ms cubic-bezier(.2,.8,.2,1);
+  }
+
+  .hero-word--clarity.is-active-state .hero-word__clarity-bg {
+    transform: scaleX(1);
+  }
+
+  .hero-word--clarity.is-active-state .hero-word__clarity-text {
+    color: var(--hero-word-clarity-text);
   }
 
   .hero-word--scale .hero-word__letter {
@@ -283,13 +264,15 @@ body,
     transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .hero-word--scale:hover .hero-word__letter {
-    transform: translate3d(0, -0.01em, 0) scale(1.2);
+  .hero-word--scale.is-active-state .hero-word__letter {
+    transform: translate3d(0, -0.01em, 0) scale(1.24);
     transition-delay: calc(var(--char-index) * 34ms);
   }
 
   .hero-word--impact .hero-word__impact-line {
-    transition: opacity 220ms ease;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
   }
 
   .hero-word--impact .hero-word__label {
@@ -297,11 +280,16 @@ body,
     transform: translate3d(0, 0, 0);
   }
 
-  .hero-word--impact:hover .hero-word__impact-line {
+  .hero-word--impact.is-active-state .hero-word__impact-line {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .hero-word--impact.is-entering .hero-word__impact-line {
     animation: heroWordImpactUnderline 320ms cubic-bezier(0.12, 0.9, 0.3, 1.08) forwards;
   }
 
-  .hero-word--impact:hover .hero-word__label {
+  .hero-word--impact.is-entering .hero-word__label {
     animation: heroWordImpactDrop 480ms cubic-bezier(0.14, 0.82, 0.24, 1) both;
   }
 }
@@ -314,14 +302,17 @@ body,
     animation: none;
   }
 
-  .hero-word__shine,
   .hero-word__letter {
     animation: none !important;
     transform: none !important;
   }
 
-  .hero-word--clarity:hover .hero-word__shine {
-    opacity: 0;
+  .hero-word--clarity:hover .hero-word__clarity-bg {
+    transform: none;
+  }
+
+  .hero-word--clarity:hover .hero-word__clarity-text {
+    color: var(--hero-word-clarity-text);
   }
 
   .hero-word--impact:hover .hero-word__impact-line {
