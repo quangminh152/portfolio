@@ -34,24 +34,9 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-[var(--color-bg)]">
       <style>
         {`
-          @keyframes heroGlowDrift {
-            0% {
-              transform: translate3d(0, 0, 0) scale(1);
-              opacity: 0.38;
-            }
-            50% {
-              transform: translate3d(20px, -16px, 0) scale(1.04);
-              opacity: 0.62;
-            }
-            100% {
-              transform: translate3d(0, 0, 0) scale(1);
-              opacity: 0.38;
-            }
-          }
-
           @keyframes heroLineIn {
             from {
               opacity: 0;
@@ -87,8 +72,43 @@ const Hero: React.FC = () => {
             }
           }
 
-          .hero-glow {
-            animation: heroGlowDrift 10s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+          .hero-background {
+            --hero-dot-color: rgba(17, 17, 17, 0.14);
+            --hero-dot-fade: rgba(17, 17, 17, 0.06);
+            --hero-glow-color: rgba(112, 154, 255, 0.12);
+            --hero-glow-edge: rgba(112, 154, 255, 0.04);
+          }
+
+          html[data-theme='dark'] .hero-background {
+            --hero-dot-color: rgba(243, 244, 246, 0.12);
+            --hero-dot-fade: rgba(243, 244, 246, 0.08);
+            --hero-glow-color: rgba(88, 144, 255, 0.16);
+            --hero-glow-edge: rgba(88, 144, 255, 0.05);
+          }
+
+          .hero-dot-field {
+            background-image: radial-gradient(circle, var(--hero-dot-color) 1.2px, transparent 1px);
+            background-size: 22px 22px;
+            background-position: center center;
+            opacity: 0.9;
+            mask-image: radial-gradient(circle at 50% 48%, black 0%, rgba(0, 0, 0, 0.92) 18%, rgba(0, 0, 0, 0.52) 42%, transparent 74%);
+            -webkit-mask-image: radial-gradient(circle at 50% 48%, black 0%, rgba(0, 0, 0, 0.92) 18%, rgba(0, 0, 0, 0.52) 42%, transparent 74%);
+          }
+
+          .hero-dot-soften {
+            background:
+              radial-gradient(circle at 50% 44%, var(--hero-dot-fade) 0%, transparent 0%),
+              linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 0%);
+          }
+
+          html[data-theme='dark'] .hero-dot-soften {
+            background:
+              radial-gradient(circle at 50% 44%, var(--hero-dot-fade) 0%, transparent 0%),
+              linear-gradient(180deg, rgba(15, 16, 17, 0.14) 0%, transparent 52%);
+          }
+
+          .hero-ambient-glow {
+            background: radial-gradient(circle at 50% 50%, var(--hero-glow-color) 0%, var(--hero-glow-edge) 24%, transparent 68%);
           }
 
           .hero-line {
@@ -127,12 +147,13 @@ const Hero: React.FC = () => {
         `}
       </style>
 
-      <div className="pointer-events-none absolute inset-0">
-        <div className="hero-glow absolute left-[10%] top-[14%] h-[300px] w-[300px] rounded-full bg-black/[0.03] blur-[100px]" />
-        <div className="hero-glow absolute right-[12%] top-[24%] h-[220px] w-[220px] rounded-full bg-black/[0.02] blur-[90px]" />
+      <div className="hero-background pointer-events-none absolute inset-0 z-0">
+        <div className="hero-dot-field absolute inset-0" />
+        <div className="hero-dot-soften absolute inset-0" />
+        <div className="hero-ambient-glow absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 blur-[90px] md:h-[38rem] md:w-[38rem]" />
       </div>
 
-      <div className="mx-auto flex min-h-[100svh] w-full max-w-[1920px] px-4 py-24 md:px-12 md:py-32 lg:px-[10vw] xl:py-36">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1920px] px-4 py-24 md:px-12 md:py-32 lg:px-[10vw] xl:py-36">
         <div className="relative flex w-full flex-1 items-center justify-center">
           <div className="flex max-w-[1480px] flex-col items-center text-center">
             <p
