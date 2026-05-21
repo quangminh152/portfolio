@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import expenseCover from '../assets/expense-cover.png';
 import expenseCoverDark from '../assets/expense-cover-dark.png';
 import expenseOld from '../assets/expense-old.png';
@@ -14,11 +14,9 @@ import expenseHome from '../assets/expense-home.png';
 import expenseSpendingOverview from '../assets/expense-spending-overview.png';
 import expenseListCategory from '../assets/expense-list-category.png';
 import expenseInput from '../assets/expense-input.png';
-import beCleanCover from '../assets/beclean.png';
-import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
 import ThemeCoverPreview from './ThemeCoverPreview';
-import type { Project } from '../types';
+import { getSelectedWorkByLink } from '../constants';
 import { usePageReveal } from '../usePageReveal';
 
 type TocItem = {
@@ -71,19 +69,10 @@ const tocItems: TocItem[] = [
 
 const tags = ['Revamp', 'UX Research', 'UX/UI Design'];
 const tools = ['Sketch'];
-const relatedBeProjects: Project[] = [
-  {
-    title: 'beClean - Hourly Cleaning Service',
-    desc: 'Designed the MVP booking experience for beClean, a new on-demand home cleaning service from be.',
-    img: beCleanCover,
-    link: '/work/beclean',
-  },
-  {
-    title: 'Bounce Dispatch to Multiple Vehicles',
-    desc: 'Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.',
-    img: bounceCover,
-    link: '/work/bounce-dispatch',
-  },
+const caseStudyProject = getSelectedWorkByLink('/work/expense');
+const relatedBeProjects = [
+  getSelectedWorkByLink('/work/beclean'),
+  getSelectedWorkByLink('/work/bounce-dispatch'),
 ];
 
 const ratioClassMap: Record<RatioKey, string> = {
@@ -455,11 +444,7 @@ const CaseStudyExpense: React.FC = () => {
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
 
-  const description = useMemo(
-    () =>
-      'A redesign of MoMo’s Expense Management experience focused on simplifying everyday usage, improving reporting clarity, and helping users build stronger spending awareness and habits.',
-    []
-  );
+  const description = caseStudyProject.desc;
 
   const openPreview = (src: string, alt: string) => setPreview({ src, alt });
   const closePreview = () => setPreview(null);
@@ -515,10 +500,10 @@ const CaseStudyExpense: React.FC = () => {
               </p> */}
 
               <h1 className="text-[clamp(1.6rem,3vw,2.8rem)] font-semibold leading-[1.18] tracking-[-0.04em] text-black">
-                Revamp Expense Management on MoMo
+                {caseStudyProject.title}
               </h1>
 
-              <p className="mt-5 max-w-3xl text-base leading-8 text-black/68 md:text-lg">
+              <p className="mt-5 max-w-full text-base leading-8 text-black/68 md:text-lg">
                 {description}
               </p>
 
@@ -895,7 +880,7 @@ const CaseStudyExpense: React.FC = () => {
                 key={project.title}
                 className="max-w-[560px] [&_.aspect-video]:aspect-video [&_.aspect-video]:mb-3 [&_.mb-16]:mb-0 [&_.project-info_h4]:mb-2 [&_.project-info_h4]:text-lg [&_.project-info_p]:max-w-none [&_.project-info_p]:text-sm [&_.project-info_p]:leading-7"
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={{ ...project, featured: false }} />
               </div>
             ))}
           </div>

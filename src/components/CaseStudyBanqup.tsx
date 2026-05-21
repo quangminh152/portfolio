@@ -1,11 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import banqupCover from '../assets/banqup-cover.png';
 import banqupCoverDark from '../assets/banqup-cover-dark.png';
-import beCleanCover from '../assets/beclean.png';
-import bounceCover from '../assets/bounce-multiple-vehicles.png';
 import ProjectCard from './ProjectCard';
 import ThemeCoverPreview from './ThemeCoverPreview';
-import type { Project } from '../types';
+import { getSelectedWorkByLink } from '../constants';
 import { usePageReveal } from '../usePageReveal';
 
 
@@ -24,19 +22,10 @@ const tocItems: TocItem[] = [
 
 const tags = ['Revamp', 'Product Design'];
 const tools = ['Figma'];
-const relatedBeProjects: Project[] = [
-  {
-    title: 'beClean - Hourly Cleaning Service',
-    desc: 'Designed the MVP booking experience for beClean, a new on-demand home cleaning service from be.',
-    img: beCleanCover,
-    link: '/work/beclean',
-  },
-  {
-    title: 'Bounce Dispatch to Multiple Vehicles',
-    desc: 'Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.',
-    img: bounceCover,
-    link: '/work/bounce-dispatch',
-  },
+const caseStudyProject = getSelectedWorkByLink('/work/banqup');
+const relatedBeProjects = [
+  getSelectedWorkByLink('/work/beclean'),
+  getSelectedWorkByLink('/work/bounce-dispatch'),
 ];
 
 function useActiveSection(items: TocItem[]) {
@@ -187,11 +176,7 @@ const CaseStudyBanqup: React.FC = () => {
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
 
-  const description = useMemo(
-    () =>
-      'Designing a more scalable mobile invoicing and receipt experience for B2B users across Banqup’s multinational EU ecosystem.',
-    []
-  );
+  const description = caseStudyProject.desc;
 
   const openPreview = (src: string, alt: string) => setPreview({ src, alt });
   const closePreview = () => setPreview(null);
@@ -247,10 +232,10 @@ const CaseStudyBanqup: React.FC = () => {
               </p> */}
 
               <h1 className="text-[clamp(1.6rem,3vw,2.8rem)] font-semibold leading-[1.18] tracking-[-0.04em] text-black">
-                🔒 Building a Scalable Invoice & Receipt Experience for B2B Users on Banqup One Mobile
+                {caseStudyProject.title}
               </h1>
 
-              <p className="mt-5 max-w-3xl text-base leading-8 text-black/68 md:text-lg">
+              <p className="mt-5 max-w-full text-base leading-8 text-black/68 md:text-lg">
                 {description}
               </p>
 
@@ -423,7 +408,7 @@ const CaseStudyBanqup: React.FC = () => {
                 key={project.title}
                 className="max-w-[560px] [&_.aspect-video]:aspect-video [&_.aspect-video]:mb-3 [&_.mb-16]:mb-0 [&_.project-info_h4]:mb-2 [&_.project-info_h4]:text-lg [&_.project-info_p]:max-w-none [&_.project-info_p]:text-sm [&_.project-info_p]:leading-7"
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={{ ...project, featured: false }} />
               </div>
             ))}
           </div>

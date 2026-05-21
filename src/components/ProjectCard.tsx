@@ -155,7 +155,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <>
       {imageBlock}
 
-      <div className="project-info">
+      <div className="project-info mb-12">
         {project.meta ? (
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-black/30">
             {project.meta}

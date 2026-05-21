@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import beCleanCover from '../assets/beclean-cover.png';
 import beCleanCoverDark from '../assets/beclean-cover-dark.png';
 import btaskeeLogo from '../assets/beclean-btaskee-logo.png';
@@ -9,12 +9,10 @@ import bookingFlowChart from '../assets/beclean-userflow.png';
 import flowOption1 from '../assets/beclean-option1.png';
 import flowOption2 from '../assets/beclean-option2.png';
 import finalMvp from '../assets/beclean-final.png';
-import beDeliveryCover from '../assets/bedelivery.png';
-import bounceMultipleVehiclesCover from '../assets/bounce-multiple-vehicles.png';
 import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import ThemeCoverPreview from './ThemeCoverPreview';
-import type { Project } from '../types';
+import { getSelectedWorkByLink } from '../constants';
 import { usePageReveal } from '../usePageReveal';
 
 type TocItem = {
@@ -220,19 +218,10 @@ const nextSteps = [
   'Request from Favorites: prioritize dispatching requests to previously favorited cleaners from past bookings.',
 ];
 
-const relatedBeProjects: Project[] = [
-  {
-    title: 'Bounce Dispatch to Multiple Vehicles',
-    desc: 'Allows customers to select other vehicles as additional options after requesting a ride. Aimed to reducing cancellation rate.',
-    img: bounceMultipleVehiclesCover,
-    link: '/work/bounce-dispatch',
-  },
-  {
-    title: 'Revamp beDelivery Home Screen',
-    desc: 'Revamp the home screen of beDelivery service, increasing CTR.',
-    img: beDeliveryCover,
-    link: '/work/home-delivery',
-  },
+const caseStudyProject = getSelectedWorkByLink('/work/beclean');
+const relatedBeProjects = [
+  getSelectedWorkByLink('/work/bounce-dispatch'),
+  getSelectedWorkByLink('/work/home-delivery'),
 ];
 
 const ratioClassMap: Record<RatioKey, string> = {
@@ -517,11 +506,7 @@ const CaseStudyBeClean: React.FC = () => {
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const isVisible = usePageReveal();
 
-  const description = useMemo(
-    () =>
-      'Led end-to-end research and product design for beClean, a new on-demand home cleaning service from be, shaping the MVP booking experience from early discovery to launch.',
-    []
-  );
+  const description = caseStudyProject.desc;
 
   const openPreview = (src: string, alt: string) => setPreview({ src, alt });
   const closePreview = () => setPreview(null);
@@ -618,10 +603,10 @@ const CaseStudyBeClean: React.FC = () => {
               </p> */}
 
               <h1 className="text-[clamp(1.6rem,3vw,2.8rem)] font-semibold leading-[1.18] tracking-[-0.04em] text-black">
-                beClean - Hourly Cleaning Service
+                {caseStudyProject.title}
               </h1>
 
-              <p className="mt-5 max-w-3xl text-base leading-8 text-black/68 md:text-lg">
+              <p className="mt-5 max-w-full text-base leading-8 text-black/68 md:text-lg">
                 {description}
               </p>
 
@@ -1154,7 +1139,7 @@ const CaseStudyBeClean: React.FC = () => {
                 key={project.title}
                 className="max-w-[560px] [&_.aspect-video]:aspect-[aspect-video] [&_.aspect-video]:mb-3 [&_.mb-16]:mb-0 [&_.project-info_h4]:mb-2 [&_.project-info_h4]:text-lg [&_.project-info_p]:max-w-none [&_.project-info_p]:text-sm [&_.project-info_p]:leading-7"
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={{ ...project, featured: false }} />
               </div>
             ))}
           </div>

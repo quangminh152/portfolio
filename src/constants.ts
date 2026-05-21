@@ -159,8 +159,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
 
 export const SELECTED_WORK: Project[] = [
   {
-    title: 'beClean - Hourly Cleaning Service',
-    desc: 'Led MVP from discovery to launch, achieving 400% GMV growth and 3.7x MAU in under a year.',
+    title: 'How I built beClean from discovery to launch, achieving over 400% GMV growth and 3.7x MAU',
+    desc: 'Led product strategy, MVP launch, and post-launch optimization for be’s hourly cleaning service.',
     img: beCleanCover,
     link: '/work/beclean',
     // meta: 'New Product · UX Research · Product Design',
@@ -168,16 +168,16 @@ export const SELECTED_WORK: Project[] = [
     accentColor: '#2D63D7',
   },
   {
-    title: 'Bounce Dispatch to Multiple Vehicles',
-    desc: 'Allows customers to select other vehicles as additional options after requesting a ride, helping reduce cancellation during driver search.',
+    title: 'How I turned a cancellation-prone waiting moment into a multi-option booking experience',
+    desc: 'Bounce dispatch to multiple vehicles, help users stay in the ride-booking journey during long driver search.',
     img: bounceCover,
     link: '/work/bounce-dispatch',
     // meta: 'Growth · Mobility · Product Design',
     accentColor: '#2D63D7',
   },
   {
-    title: 'Revamp beDelivery Home Screen',
-    desc: 'A redesign focused on clarifying key actions, improving service discoverability, and increasing more users into the booking flow.',
+    title: 'Revamp beDelivery’s home experience to guide more users into the booking flow',
+    desc: 'Redesigned the service entry experience to improve action clarity, discoverability, and booking intent.',
     img: deliveryCover,
     link: '/work/home-delivery',
     // meta: 'Growth · Mobility · Product Design',
@@ -192,14 +192,24 @@ export const SELECTED_WORK: Project[] = [
     accentColor: '#C10078',
   },
   {
-    title: 'Revamp MoMo Expense Management',
-    desc: 'Redesigned the expense tracking experience to improve clarity, reduce friction, and support stronger spending habits.',
+    title: 'How I redesigned MoMo Expense Management to turn payment activity into clearer spending insights',
+    desc: 'Made expense tracking easier to understand, giving users more reason to pay with MoMo.',
     img: expenseCover,
     link: '/work/expense',
     // meta: 'Revamp · UX Research · UX/UI Design',
     accentColor: '#C10078',
   },
 ];
+
+export const getSelectedWorkByLink = (link: string): Project => {
+  const project = SELECTED_WORK.find((item) => item.link === link);
+
+  if (!project) {
+    throw new Error(`Selected work not found for link: ${link}`);
+  }
+
+  return project;
+};
 
 export const PRIVATE_WORK = {
   period: '03.25 — Present',
