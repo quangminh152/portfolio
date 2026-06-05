@@ -52,7 +52,7 @@ useEffect(() => {
                 >
               <div className="max-w-[72ch] space-y-6 text-[17px] leading-8 text-black/68 md:text-[18px] md:leading-9">
                 <p>
-                  I’m a Product Designer based in 🇻🇳 Vietnam with over 4 years of experience designing
+                  I’m a Product Designer based in 🇻🇳 Vietnam with <span className="font-bold text-black">5 years of experience</span>  designing
                   digital products across <span className="font-bold text-black">fintech</span>,
                   <span className="font-bold text-black"> mobility</span>, in <span className="font-bold text-black"> B2C</span> and
                   <span className="font-bold text-black"> B2B workflows</span>.

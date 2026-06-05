@@ -33,7 +33,7 @@ const experienceItems: TimelineEntry[] = [
     logoFallback: 'B',
     role: 'UX Designer',
     companyLine: 'Banqup Group',
-    period: 'Mar 2025 - Present',
+    period: '03/2025 - Present',
     intro:
       'Banqup Group is a European fintech company offering smart invoicing and payment solutions.',
     description:
@@ -51,7 +51,7 @@ const experienceItems: TimelineEntry[] = [
     logoFallback: 'be',
     role: 'Product Designer',
     companyLine: 'BE GROUP',
-    period: 'Dec 2022 - Mar 2025',
+    period: '12/2022 - 03/2025',
     intro:
       'BE GROUP is Vietnam’s big ride-hailing and super app platform with millions of users nationwide.',
     description:
@@ -69,7 +69,7 @@ const experienceItems: TimelineEntry[] = [
     logoFallback: 'M',
     role: 'UX/UI Designer',
     companyLine: 'MoMo (M_Service)',
-    period: 'Apr 2022 - Dec 2022',
+    period: '01/2022 - 12/2022',
     intro:
       'MoMo is Vietnam’s leading super app offering mobile payments, financial services, and lifestyle features.',
     bullets: [
@@ -85,7 +85,7 @@ const experienceItems: TimelineEntry[] = [
     logoFallback: 'U',
     role: 'UX/UI Designer',
     companyLine: 'USUM Software',
-    period: 'Sep 2021 - Apr 2022',
+    period: '09/2021 - 01/2022',
     intro:
       'Participated in building from landing pages to bigger projects like Print-on-demand services and internal admin systems.',
   },
