@@ -10,6 +10,10 @@
   --color-surface: #f7f7f7;
   --color-surface-raised: #ffffff;
   --color-surface-soft: rgba(17, 17, 17, 0.02);
+  --color-error-surface: rgba(220, 38, 38, 0.055);
+  --color-error-border: rgba(220, 38, 38, 0.16);
+  --color-info-surface: rgba(37, 99, 235, 0.055);
+  --color-info-border: rgba(37, 99, 235, 0.16);
   --color-header-bg: rgba(255, 255, 255, 0.78);
   --hero-word-clarity-bg: #0f1011;
   --hero-word-clarity-text: #ffffff;
@@ -31,7 +35,7 @@ html[data-theme='dark'] {
   --color-bg: #0f1011;
   --color-text: #f3f4f6;
   --color-text-strong: #ffffff;
-  --color-muted: rgba(243, 244, 246, 0.7);
+  --color-muted: rgba(243, 244, 246, 0.891);
   --color-subtle: rgba(243, 244, 246, 0.52);
   --color-faint: rgba(243, 244, 246, 0.34);
   --color-border: rgba(243, 244, 246, 0.11);
@@ -39,6 +43,10 @@ html[data-theme='dark'] {
   --color-surface: #181a1d;
   --color-surface-raised: #141619;
   --color-surface-soft: rgba(243, 244, 246, 0.055);
+  --color-error-surface: rgba(248, 113, 113, 0.095);
+  --color-error-border: rgba(248, 113, 113, 0.2);
+  --color-info-surface: rgba(96, 165, 250, 0.1);
+  --color-info-border: rgba(96, 165, 250, 0.22);
   --color-header-bg: rgba(15, 16, 17, 0.76);
   --hero-word-clarity-bg: #ffffff;
   --hero-word-clarity-text: #0f1011;
@@ -127,6 +135,135 @@ body,
 
 .theme-toggle svg {
   animation: themeIconIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.error-surface {
+  background-color: var(--color-error-surface);
+  border-color: var(--color-error-border);
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease;
+}
+
+.info-surface {
+  background-color: var(--color-info-surface);
+  border-color: var(--color-info-border);
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease;
+}
+
+.question-list-card {
+  --question-list-card-bg: #fcfcfc;
+  background-color: var(--question-list-card-bg);
+}
+
+.question-list-fade {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(252, 252, 252, 0) 0%,
+      rgba(255, 255, 255, 0.892) 58%,
+      var(--question-list-card-bg) 100%
+    );
+  /* backdrop-filter: blur(3px); */
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.question-list-action {
+  display: inline-flex;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background-color: color-mix(in srgb, var(--question-list-card-bg) 88%, var(--color-bg));
+  padding: 0.25rem 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  box-shadow: 0 8px 22px rgba(17, 17, 17, 0.06);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.question-list-action:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+  transform: translateY(-1px);
+}
+
+.question-list-action:focus-visible {
+  outline: 2px solid var(--color-border-strong);
+  outline-offset: 2px;
+}
+
+html[data-theme='dark'] .question-list-card {
+  --question-list-card-bg: #191b1e;
+}
+
+html[data-theme='dark'] .question-list-fade {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(25, 27, 30, 0) 0%,
+      rgba(25, 27, 30, 0.659) 58%,
+      var(--question-list-card-bg) 100%
+    );
+}
+
+.interview-quote {
+  background-color: rgba(17, 17, 17, 0.028);
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.035);
+}
+
+.interview-quote__mark {
+  color: rgba(17, 17, 17, 0.08);
+}
+
+.interview-quote__text,
+.interview-quote__text span {
+  font-family: inherit;
+  font-style: italic !important;
+  font-synthesis-style: auto;
+}
+
+.interview-quote__text span {
+  font-family: inherit;
+}
+
+.interview-quote__action {
+  color: var(--color-subtle);
+  background-color: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--color-border);
+  opacity: 1;
+}
+
+.interview-quote__action:hover {
+  color: var(--color-muted);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: var(--color-border-strong);
+}
+
+html[data-theme='dark'] .interview-quote {
+  background-color: rgba(243, 244, 246, 0.055);
+  box-shadow: inset 0 0 0 1px rgba(243, 244, 246, 0.05);
+}
+
+html[data-theme='dark'] .interview-quote__mark {
+  color: rgba(243, 244, 246, 0.11);
+}
+
+html[data-theme='dark'] .interview-quote__action {
+  background-color: rgba(20, 22, 25, 0.82);
+}
+
+html[data-theme='dark'] .interview-quote__action:hover {
+  background-color: rgba(243, 244, 246, 0.09);
 }
 
 .page-reveal {
@@ -243,6 +380,15 @@ body,
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .interview-quote__action {
+    opacity: 0;
+  }
+
+  .interview-quote:hover .interview-quote__action,
+  .interview-quote:focus-within .interview-quote__action {
+    opacity: 1;
+  }
+
   .hero-word--clarity .hero-word__clarity-bg {
     transition: transform 380ms cubic-bezier(.2,.8,.2,1);
   }

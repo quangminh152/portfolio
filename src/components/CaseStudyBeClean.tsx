@@ -9,6 +9,9 @@ import bookingFlowChart from '../assets/beclean-userflow.png';
 import flowOption1 from '../assets/beclean-option1.png';
 import flowOption2 from '../assets/beclean-option2.png';
 import finalMvp from '../assets/beclean-final.png';
+import cleanFinalGif from '../assets/clean-final.gif';
+import favoriteCleaner from '../assets/favorite-cleaner.png';
+import requestSpecificCleaner from '../assets/request-specific-cleaner.png';
 import ImpactStatCard from './ImpactStatCard';
 import ProjectCard from './ProjectCard';
 import ThemeCoverPreview from './ThemeCoverPreview';
@@ -29,6 +32,17 @@ type StatItem = {
   suffix?: string;
   label: string;
   note: string;
+};
+
+type FindingIcon = 'shield' | 'refresh' | 'user' | 'message' | 'checklist';
+
+type KeyFinding = {
+  icon: FindingIcon;
+  title: string;
+  body: string;
+  quoteVi: string;
+  quoteEn: string;
+  source: string;
 };
 
 const tocItems: TocItem[] = [
@@ -52,6 +66,9 @@ type AssetMap = {
   flowOption1?: string;
   flowOption2?: string;
   finalMvp?: string;
+  cleanFinalGif?: string;
+  favoriteCleaner?: string;
+  requestSpecificCleaner?: string;
 };
 
 const assets: AssetMap = {
@@ -63,6 +80,9 @@ const assets: AssetMap = {
   flowOption1,
   flowOption2,
   finalMvp,
+  cleanFinalGif,
+  favoriteCleaner,
+  requestSpecificCleaner,
 };
 
 const tags = ['New Product', 'Product Design', 'UX Research'];
@@ -94,26 +114,57 @@ const userInterviewQuestions = [
   'Do you have any suggestions to improve the service?',
 ];
 
-const keyFindings = [
+const userInterviewQuestionMidpoint = Math.ceil(userInterviewQuestions.length / 2);
+const userInterviewQuestionColumns = [
+  userInterviewQuestions.slice(0, userInterviewQuestionMidpoint),
+  userInterviewQuestions.slice(userInterviewQuestionMidpoint),
+];
+
+const keyFindings: KeyFinding[] = [
   {
+    icon: 'shield',
     title: 'Trust and Security',
     body: 'Users often had initial concerns about safety and letting strangers into their homes. Trust improved after actual usage, but security remained a key barrier to first-time adoption.',
+    quoteVi:
+      'An ninh quan trọng nhất. Người ta làm bẩn thì thay người được, chứ ăn cắp là mất của rồi.',
+    quoteEn:
+      'Security matters the most. If someone doesn\'t do the job properly, I can replace them. But if they steal something, the loss is already done.',
+    source: '— Participant 03, non-app user',
   },
   {
+    icon: 'refresh',
     title: 'Flexibility Over Subscriptions',
     body: 'Although many users were open to recurring services, they still preferred on-demand bookings because they were unsure whether subscriptions would be flexible enough when plans changed.',
+    quoteVi: 'Không biết nếu bữa đó bận thì cancel như thế nào, có hoàn tiền không.',
+    quoteEn:
+      'I’m not sure what happens if I’m busy that day — can I cancel, and will I get a refund?',
+    source: '— Participant 05, weekly app user',
   },
   {
+    icon: 'user',
     title: 'Preferred Cleaners',
     body: 'Users wanted to book the same cleaner again once trust had been built. Existing platforms made this difficult, which pushed people to coordinate repeat bookings outside the app.',
+    quoteVi:
+      'Anh sẽ thử qua 4-5 người, rồi tới một người anh thấy ok thì anh sẽ book đi book lại người đó.',
+    quoteEn:
+      'I would try 4-5 cleaners, and once I found someone does the job well, I’d keep booking that person again.',
+    source: '— Participant 01, experienced app user',
   },
   {
+    icon: 'message',
     title: 'Communication Barriers',
     body: 'Some users preferred a quieter cleaning experience but felt awkward about saying so directly. This suggested a need for discreet communication preferences inside the booking flow.',
+    quoteVi: 'Chị yêu cầu là không nói chuyện lúc làm nếu không cần thiết.',
+    quoteEn: 'I specifically asked them not to have conversations while cleaning if unnecessary.',
+    source: '— Participant 02, recurring cleaning user',
   },
   {
+    icon: 'checklist',
     title: 'Booking and Task Clarity',
     body: 'Users wanted more clarity around what tasks were included, whether cleaners brought their own tools, and whether special requests such as pet-area cleaning were supported.',
+    quoteVi: 'Nhiều lúc anh không biết có nên dặn họ mang dụng cụ không, hay là họ sẽ tự mang theo.',
+    quoteEn: 'Sometimes I’m not sure if I should ask them to bring their own tools or if they will bring them by default.',
+    source: '— Participant 05, weekly app user',
   },
 ];
 
@@ -140,6 +191,8 @@ const phaseOneFunctions = [
   'Select add-on services',
   'Select date time',
   'Add notes for cleaners',
+  'Select payment method',
+  'Apply promotion',
 ];
 
 const usabilityResults = [
@@ -214,8 +267,16 @@ const impactExtra = [
 ];
 
 const nextSteps = [
-  'Request a Specific Cleaner: allow users to choose a cleaner based on available slots.',
-  'Request from Favorites: prioritize dispatching requests to previously favorited cleaners from past bookings.',
+  {
+    body: 'Request a Specific Cleaner: allow users to choose a cleaner based on available slots.',
+    image: assets.requestSpecificCleaner,
+    alt: 'Request a Specific Cleaner feature concept',
+  },
+  {
+    body: 'Request from Favorites: prioritize dispatching requests to previously favorited cleaners from past bookings.',
+    image: assets.favoriteCleaner,
+    alt: 'Request from Favorites feature concept',
+  },
 ];
 
 const caseStudyProject = getSelectedWorkByLink('/work/beclean');
@@ -344,10 +405,118 @@ const Box = ({ children }: { children: React.ReactNode }) => (
   <div className="rounded-[28px] border border-black/8 bg-white p-6 md:p-8">{children}</div>
 );
 
-const BulletList = ({ items }: { items: string[] }) => (
+const FindingIconGraphic = ({ icon }: { icon: FindingIcon }) => {
+  const iconMap: Record<FindingIcon, React.ReactNode> = {
+    shield: (
+      <path d="M12 3.5 5.8 5.9v5.2c0 3.8 2.6 7.2 6.2 8.2 3.6-1 6.2-4.4 6.2-8.2V5.9L12 3.5Z" />
+    ),
+    refresh: (
+      <>
+        <path d="M18 7.5A7 7 0 0 0 6.2 5.2L4 7.4" />
+        <path d="M4 4.2v3.2h3.2" />
+        <path d="M6 16.5a7 7 0 0 0 11.8 2.3L20 16.6" />
+        <path d="M20 19.8v-3.2h-3.2" />
+      </>
+    ),
+    user: (
+      <>
+        <path d="M12 12.2a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+        <path d="M4.8 20a7.2 7.2 0 0 1 14.4 0" />
+      </>
+    ),
+    message: (
+      <path d="M5 5.5h14v9.8H9.2L5 18.5v-13Z" />
+    ),
+    checklist: (
+      <>
+        <path d="m5 7.3 1.6 1.6L9.8 5.7" />
+        <path d="M12 7.4h7" />
+        <path d="m5 14.6 1.6 1.6 3.2-3.2" />
+        <path d="M12 14.7h7" />
+      </>
+    ),
+  };
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-6 w-6 shrink-0 text-black/55"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {iconMap[icon]}
+    </svg>
+  );
+};
+
+const InterviewQuote = ({
+  quoteVi,
+  quoteEn,
+  source,
+}: {
+  quoteVi: string;
+  quoteEn: string;
+  source: string;
+}) => {
+  const [isEnglish, setIsEnglish] = useState(false);
+  const buttonText = isEnglish ? 'Show original (VN)' : 'Translate to EN';
+  const quote = isEnglish ? quoteEn : quoteVi;
+
+  return (
+    <figure className="interview-quote relative mt-6 mr-2 mb-2 overflow-hidden rounded-2xl px-5 py-5">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 64 48"
+        className="interview-quote__mark pointer-events-none absolute left-4 top-3 h-7 w-10 select-none"
+      >
+        <path
+          fill="currentColor"
+          d="M24.8 5.2C13.2 11.4 7.2 20.4 7.2 31.1c0 7.2 4.4 11.7 10.8 11.7 5.8 0 10.1-4.1 10.1-9.8 0-5.3-3.7-8.9-8.8-8.9-1 0-2 .1-2.9.4 1.4-5.1 5.4-9.5 12.1-13.4L24.8 5.2Zm28 0C41.2 11.4 35.2 20.4 35.2 31.1c0 7.2 4.4 11.7 10.8 11.7 5.8 0 10.1-4.1 10.1-9.8 0-5.3-3.7-8.9-8.8-8.9-1 0-2 .1-2.9.4 1.4-5.1 5.4-9.5 12.1-13.4L52.8 5.2Z"
+        />
+      </svg>
+      <button
+        type="button"
+        onClick={() => setIsEnglish((current) => !current)}
+        aria-label={buttonText}
+        aria-pressed={isEnglish}
+        className="interview-quote__action absolute right-3 top-3 z-10 inline-flex rounded-full px-3 py-1 text-[12px] font-medium leading-5 backdrop-blur-sm transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/28"
+      >
+        {buttonText}
+      </button>
+      <blockquote
+        lang={isEnglish ? 'en' : 'vi'}
+        className="interview-quote__text relative max-w-full pt-10 text-[12px] font-normal leading-7 text-black/68 sm:pt-7 sm:text-base sm:leading-8"
+      >
+        <span>{quote}</span>
+      </blockquote>
+      <figcaption className="relative mt-2 text-sm font-normal leading-5 text-black/42">
+        {source}
+      </figcaption>
+    </figure>
+  );
+};
+
+const KeyValuePair = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: React.ReactNode;
+}) => (
+  <div>
+    <p className="mb-1 text-regular font-regular text-black/60">{label}</p>
+    <p className="text-regular font-medium text-black/75">{value}</p>
+  </div>
+);
+
+const BulletList = ({ items }: { items: React.ReactNode[] }) => (
   <ul className="space-y-3">
-    {items.map((item) => (
-      <li key={item} className="flex gap-3">
+    {items.map((item, index) => (
+      <li key={index} className="flex gap-3">
         <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-black/30" />
         <span>{item}</span>
       </li>
@@ -363,6 +532,40 @@ const NumberedList = ({ items }: { items: string[] }) => (
           {index + 1}
         </span>
         <span className="pt-0.5">{item}</span>
+      </li>
+    ))}
+  </ol>
+);
+
+const NextStepsList = ({
+  items,
+  onPreview,
+}: {
+  items: Array<{ body: string; image?: string; alt: string }>;
+  onPreview: (src: string, alt: string) => void;
+}) => (
+  <ol className="space-y-6">
+    {items.map((item, index) => (
+      <li key={item.body} className="flex gap-4">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black/10 bg-black/[0.03] text-xs font-semibold text-black/55">
+          {index + 1}
+        </span>
+        <div className="min-w-0 flex-1 pt-0.5">
+          <p>{item.body}</p>
+          {item.image ? (
+            <button
+              type="button"
+              onClick={() => onPreview(item.image as string, item.alt)}
+              className="group mt-4 block w-full max-w-full overflow-hidden rounded-2xl border border-black/8 bg-[#f6f6f6] text-left md:max-w-[40%]"
+            >
+              <img
+                src={item.image}
+                alt={item.alt}
+                className="h-auto w-full transition duration-300 group-hover:scale-[1.015]"
+              />
+            </button>
+          ) : null}
+        </div>
       </li>
     ))}
   </ol>
@@ -504,6 +707,7 @@ const PreviewImage = ({
 const CaseStudyBeClean: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
+  const [isQuestionListOpen, setIsQuestionListOpen] = useState(false);
   const isVisible = usePageReveal();
 
   const description = caseStudyProject.desc;
@@ -691,11 +895,57 @@ const CaseStudyBeClean: React.FC = () => {
               </div>
 
               <div className="pt-2">
+                <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">
+                  Market competitors and challenges
+                </h3>
+                <p className="mt-3">
+                  At the time being, the hourly cleaning service market in Vietnam was dominated by two major players:{' '}
+                  <a
+                    href="https://www.btaskee.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black transition"
+                  >
+                    <span className="underline font-semibold decoration-black/18 underline-offset-4 transition hover:decoration-black">
+                      bTaskee
+                    </span>
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    href="https://www.jupviec.vn/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black transition"
+                  >
+                    <span className="underline font-semibold decoration-black/18 underline-offset-4 transition hover:decoration-black">
+                      JupViec
+                    </span>
+                  </a>
+                  , with bTaskee being the leading platform. Both platforms had built strong brands and had a loyal user base, creating a significant barrier for new competitors wanting to enter the market. 
+                </p>
+                <p className="mt-3">
+                  Two main services that bTaskee and JupViec offered were:
+                </p>
+                <div className="mt-3">
+                  <BulletList
+                    items={[
+                      <>
+                        <strong>On-demand cleaning:</strong> allowed users to book one-time services for immediate or future needs.
+                      </>,
+                      <>
+                        <strong>Periodic cleaning:</strong> allowed users to subscribe to regular cleaning schedules.
+                      </>,
+                    ]}
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Target customers</h3>
                 <div className="mt-4 grid gap-5 sm:grid-cols-2">
                   <div>
                     <p className="mb-2 font-semibold text-black">Location</p>
-                    <p>Major cities in Vietnam such as Ho Chi Minh City and Ha Noi.</p>
+                    <p>Ho Chi Minh City and Ha Noi.</p>
                   </div>
                   <div>
                     <p className="mb-2 font-semibold text-black">Age</p>
@@ -712,6 +962,8 @@ const CaseStudyBeClean: React.FC = () => {
                 </div>
               </div>
             </Section>
+
+            
 
             <Section id="goal" title="What’s the goal?">
               <p>
@@ -763,39 +1015,99 @@ const CaseStudyBeClean: React.FC = () => {
 
               <BulletList
                 items={[
-                  'Understand user behavior and expectations through interviews.',
-                  'Run usability testing on multiple booking flow directions.',
-                  'At the time being, the market for hourly, on-demand cleaning services in vietnam is dominated by two major players: bTaskee (#1) and Jupviec (#2). these platforms have established themselves as the most popular choices for users seeking convenient and reliable cleaning services',
+                  <>
+                    Understand user behavior and expectations through <strong>user interviews</strong>.
+                  </>,
+                  <>
+                    Run <strong>usability testing</strong> on multiple booking flow directions.
+                  </>,
+                  'At the time being, the market for hourly, on-demand cleaning services in vietnam is dominated by two major players: bTaskee (#1) and Jupviec (#2). these platforms have established themselves as the most popular choices for users seeking convenient and reliable cleaning services.',
                 ]}
               />
 
               <div className="pt-2">
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">User Interview</h3>
-
-                <div className="mt-5 grid gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl border border-black/6 bg-black/[0.015] p-4">
-                    <p><strong>Interviewer:</strong> 1 Product Designer</p>
-                    <p><strong>Duration:</strong> 30 to 60 minutes</p>
-                    <p><strong>Sample size:</strong> 10 people</p>
-                  </div>
-                  <div className="rounded-2xl border border-black/6 bg-black/[0.015] p-4">
-                    <p><strong>Location:</strong> Ho Chi Minh / Ha Noi</p>
-                    <p><strong>Behavior:</strong> Users who had booked cleaning services online before</p>
-                    <p><strong>Notes:</strong> Recorded sessions and observed habits / pain points</p>
+                {/* <div className="mt-5 rounded-2xl border border-black/6 bg-black/[0.015] p-4 md:p-5"> */}
+                <div className="mt-5 mb-5">
+                  <div className="grid gap-y-4 md:grid-cols-2">
+                    <KeyValuePair label="Interviewer" value="1 Product Designer" />
+                    <KeyValuePair label="Location" value="Ho Chi Minh / Ha Noi" />
+                    <KeyValuePair label="Duration" value="30 to 60 minutes" />
+                    <KeyValuePair
+                      label="Behavior"
+                      value="Users who had booked cleaning services online before"
+                    />
+                    <KeyValuePair label="Sample size target" value="10 people" />
+                    <KeyValuePair
+                      label="Notes"
+                      value="Recorded sessions and observed habits / pain points"
+                    />
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-black/6 bg-black/[0.015] p-5">
-                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
-                    Question List (EN)
-                  </p>
-                  <div className="grid gap-x-8 gap-y-3 md:grid-cols-2">
-                    {userInterviewQuestions.map((q, index) => (
-                      <div key={q} className="flex gap-3 text-sm leading-7 text-black/68">
-                        <span className="w-6 shrink-0 text-black/35">{index + 1}.</span>
-                        <span>{q}</span>
+                <div className="question-list-card mt-8 rounded-2xl border border-black/6 p-5">
+                  <button
+                    type="button"
+                    aria-expanded={isQuestionListOpen}
+                    aria-controls="beclean-question-list"
+                    onClick={() => setIsQuestionListOpen((current) => !current)}
+                    className="flex w-full items-center justify-between gap-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black/28"
+                  >
+                    <span className="text-sm font-semibold uppercase tracking-[0.16em] text-black/40">
+                      Question List (translated to english)
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className={`h-5 w-5 shrink-0 text-black/40 transition-transform duration-200 ${
+                        isQuestionListOpen ? 'rotate-180' : ''
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                  <div className="relative -mx-5 mt-4 px-5">
+                    <div
+                      id="beclean-question-list"
+                      className={`grid gap-x-8 gap-y-3 transition-[max-height] duration-300 md:grid-cols-2 ${
+                        isQuestionListOpen ? 'max-h-[1200px]' : 'max-h-[4.75rem] overflow-hidden'
+                      }`}
+                    >
+                      {userInterviewQuestionColumns.map((column, columnIndex) => (
+                        <div key={columnIndex} className="space-y-3">
+                          {column.map((q, index) => {
+                            const questionNumber =
+                              columnIndex * userInterviewQuestionMidpoint + index + 1;
+
+                            return (
+                              <div key={q} className="flex gap-3 text-sm leading-7 text-black/68">
+                                <span className="w-6 shrink-0 text-black/35">
+                                  {questionNumber}.
+                                </span>
+                                <span>{q}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                    {!isQuestionListOpen ? (
+                      <div className="question-list-fade pointer-events-none absolute inset-x-0 bottom-0 top-1/3 flex items-end justify-center pb-1">
+                        <button
+                          type="button"
+                          aria-controls="beclean-question-list"
+                          onClick={() => setIsQuestionListOpen(true)}
+                          className="question-list-action pointer-events-auto"
+                        >
+                          View all
+                        </button>
                       </div>
-                    ))}
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -806,19 +1118,28 @@ const CaseStudyBeClean: React.FC = () => {
                   {keyFindings.map((item) => (
                     <div
                       key={item.title}
-                      className="rounded-2xl border border-black/6 bg-black/[0.015] p-5"
+                      className="flex items-start gap-4 rounded-2xl border border-black/6 p-4"
                     >
-                      <p className="mb-2 font-semibold text-black">{item.title}</p>
-                      <p>{item.body}</p>
+                      <FindingIconGraphic icon={item.icon} />
+                      <div className="min-w-0 flex-1">
+                        <p className="mb-1 font-semibold text-black">{item.title}</p>
+                        <p className="text-sm text-black/68">{item.body}</p>
+                        <InterviewQuote
+                          quoteVi={item.quoteVi}
+                          quoteEn={item.quoteEn}
+                          source={item.source}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="pt-2">
-                <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Highlighted pain points</h3>
-                <div className="mt-4">
-                  <BulletList items={painPoints} />
+                
+                <div className="mt-5 error-surface rounded-2xl border px-6 py-5 text-black">
+                  <h3 className="mb-4 text-lg font-semibold tracking-[-0.02em] text-black">Highlighted pain points</h3>
+                  <NumberedList items={painPoints} />
                 </div>
               </div>
             </Section>
@@ -841,7 +1162,7 @@ const CaseStudyBeClean: React.FC = () => {
                       <h3 className="text-xl font-semibold tracking-[-0.02em] text-black">
                         bTaskee
                       </h3>
-                      <p className="text-sm text-black/50">Competitor booking flow review</p>
+                      <p className="text-sm text-black/50">On-demand booking flow</p>
                     </div>
                   </div>
 
@@ -891,7 +1212,7 @@ const CaseStudyBeClean: React.FC = () => {
                       <h3 className="text-xl font-semibold tracking-[-0.02em] text-black">
                         JupViec
                       </h3>
-                      <p className="text-sm text-black/50">Competitor booking flow review</p>
+                      <p className="text-sm text-black/50">On-demand booking flow</p>
                     </div>
                   </div>
 
@@ -931,24 +1252,23 @@ const CaseStudyBeClean: React.FC = () => {
                 </Box>
 
                 <div className="pt-2">
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">Opportunity</h3>
-                  <p className="mt-4">
-                    Both competitors offered solid customization, but they still left room to
-                    improve usability. This created a clear opportunity for beClean to stand out
-                    through simpler structure, clearer pricing, and better flexibility.
-                  </p>
+                  
+                  <div className="mt-5 info-surface rounded-2xl border px-6 py-5 text-black">
+                    <h3 className="mb-4 text-lg font-semibold tracking-[-0.02em] text-black">Opportunity</h3>
+                    <p>
+                      Both competitors offered solid customization, but they still left room to
+                      improve usability. This created a clear opportunity for beClean to stand out
+                      through simpler structure, clearer pricing, and better flexibility.
+                    </p>
 
-                  <div className="mt-4">
-                    <BulletList items={opportunities} />
+                    <div className="mt-4">
+                      <BulletList items={opportunities} />
+                    </div>
                   </div>
 
-                  <div className="mt-5">
+                  <div className="mt-8">
                     <p className="mb-4 font-semibold text-black">First-phase must-have functions</p>
-                    <div className="flex flex-wrap gap-2">
-                      {phaseOneFunctions.map((item) => (
-                        <Chip key={item}>{item}</Chip>
-                      ))}
-                    </div>
+                    <NumberedList items={phaseOneFunctions} />
                   </div>
                 </div>
               </div>
@@ -1008,7 +1328,9 @@ const CaseStudyBeClean: React.FC = () => {
                 <h3 className="text-lg font-semibold tracking-[-0.02em] text-black">
                   Usability testing the 2 options
                 </h3>
-
+                <p className="mt-2">
+                  I ran <strong>usability testing sessions</strong> with the same participants from the user interviews to compare the two flow options. The goal was to see which flow felt more intuitive, efficient, and scalable.
+                </p>
                 <div className="mt-5 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
                   <div className="rounded-2xl border border-black/6 bg-black/[0.015] p-5">
                     <p className="mb-4 font-semibold text-black">Quantitative insights</p>
@@ -1037,6 +1359,15 @@ const CaseStudyBeClean: React.FC = () => {
                     label="final MVP booking flow"
                     onPreview={openPreview}
                   />
+                </div>
+                <div className="mx-auto mt-6 max-w-full md:max-w-[33.333%]">
+                  <PreviewImage
+                    src={assets.cleanFinalGif}
+                    alt="MVP booking flow"
+                    label="MVP booking flow"
+                    onPreview={openPreview}
+                  />
+                  <p className="mt-3 text-sm text-black/50">MVP booking flow</p>
                 </div>
               </div>
             </Section>
@@ -1090,7 +1421,7 @@ const CaseStudyBeClean: React.FC = () => {
                 we explored two follow-up features.
               </p>
 
-              <NumberedList items={nextSteps} />
+              <NextStepsList items={nextSteps} onPreview={openPreview} />
             </Section>
           </article>
 
