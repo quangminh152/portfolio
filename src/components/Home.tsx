@@ -99,7 +99,7 @@ const Home: React.FC = () => {
           </div>
 
           {featuredProject ? (
-            <div className="mb-14">
+            <div className="mb-24">
               <ProjectCard
                 project={featuredProject}
                 accentColor={featuredProject.accentColor}
