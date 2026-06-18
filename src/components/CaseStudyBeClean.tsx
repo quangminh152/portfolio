@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import beCleanCover from '../assets/beclean-cover.png';
 import beCleanCoverDark from '../assets/beclean-cover-dark.png';
 import btaskeeLogo from '../assets/beclean-btaskee-logo.png';
@@ -119,6 +119,7 @@ const userInterviewQuestionColumns = [
   userInterviewQuestions.slice(0, userInterviewQuestionMidpoint),
   userInterviewQuestions.slice(userInterviewQuestionMidpoint),
 ];
+const questionListPreviewHeight = 76;
 
 const keyFindings: KeyFinding[] = [
   {
@@ -483,8 +484,25 @@ const InterviewQuote = ({
         onClick={() => setIsEnglish((current) => !current)}
         aria-label={buttonText}
         aria-pressed={isEnglish}
-        className="interview-quote__action absolute right-3 top-3 z-10 inline-flex rounded-full px-3 py-1 text-[12px] font-medium leading-5 backdrop-blur-sm transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/28"
+        className="interview-quote__action absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-medium leading-5 backdrop-blur-sm transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/28"
       >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="h-3.5 w-3.5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m5 8 6 6" />
+          <path d="m4 14 6-6 2-3" />
+          <path d="M2 5h12" />
+          <path d="M7 2h1" />
+          <path d="m22 22-5-10-5 10" />
+          <path d="M14 18h6" />
+        </svg>
         {buttonText}
       </button>
       <blockquote
@@ -708,12 +726,36 @@ const CaseStudyBeClean: React.FC = () => {
   const activeId = useActiveSection(tocItems);
   const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null);
   const [isQuestionListOpen, setIsQuestionListOpen] = useState(false);
+  const [questionListHeight, setQuestionListHeight] = useState(questionListPreviewHeight);
+  const questionListContentRef = useRef<HTMLDivElement>(null);
   const isVisible = usePageReveal();
 
   const description = caseStudyProject.desc;
 
   const openPreview = (src: string, alt: string) => setPreview({ src, alt });
   const closePreview = () => setPreview(null);
+
+  useEffect(() => {
+    const content = questionListContentRef.current;
+    if (!content) return;
+
+    const measureQuestionList = () => {
+      setQuestionListHeight(Math.max(Math.ceil(content.scrollHeight) + 2, questionListPreviewHeight));
+    };
+
+    measureQuestionList();
+
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measureQuestionList) : null;
+
+    resizeObserver?.observe(content);
+    window.addEventListener('resize', measureQuestionList);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', measureQuestionList);
+    };
+  }, []);
 
   return (
     <div className="bg-white text-black">
@@ -1074,40 +1116,54 @@ const CaseStudyBeClean: React.FC = () => {
                   <div className="relative -mx-5 mt-4 px-5">
                     <div
                       id="beclean-question-list"
-                      className={`grid gap-x-8 gap-y-3 transition-[max-height] duration-300 md:grid-cols-2 ${
-                        isQuestionListOpen ? 'max-h-[1200px]' : 'max-h-[4.75rem] overflow-hidden'
+                      style={{
+                        maxHeight: isQuestionListOpen
+                          ? `${questionListHeight}px`
+                          : `${questionListPreviewHeight}px`,
+                      }}
+                      className={`question-list-panel ${
+                        isQuestionListOpen
+                          ? 'question-list-panel--open'
+                          : 'question-list-panel--preview'
                       }`}
                     >
-                      {userInterviewQuestionColumns.map((column, columnIndex) => (
-                        <div key={columnIndex} className="space-y-3">
-                          {column.map((q, index) => {
-                            const questionNumber =
-                              columnIndex * userInterviewQuestionMidpoint + index + 1;
+                      <div
+                        ref={questionListContentRef}
+                        className="grid gap-x-8 gap-y-3 md:grid-cols-2"
+                      >
+                        {userInterviewQuestionColumns.map((column, columnIndex) => (
+                          <div key={columnIndex} className="space-y-3">
+                            {column.map((q, index) => {
+                              const questionNumber =
+                                columnIndex * userInterviewQuestionMidpoint + index + 1;
 
-                            return (
-                              <div key={q} className="flex gap-3 text-sm leading-7 text-black/68">
-                                <span className="w-6 shrink-0 text-black/35">
-                                  {questionNumber}.
-                                </span>
-                                <span>{q}</span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </div>
-                    {!isQuestionListOpen ? (
-                      <div className="question-list-fade pointer-events-none absolute inset-x-0 bottom-0 top-1/3 flex items-end justify-center pb-1">
-                        <button
-                          type="button"
-                          aria-controls="beclean-question-list"
-                          onClick={() => setIsQuestionListOpen(true)}
-                          className="question-list-action pointer-events-auto"
-                        >
-                          View all
-                        </button>
+                              return (
+                                <div key={q} className="flex gap-3 text-sm leading-7 text-black/68">
+                                  <span className="w-6 shrink-0 text-black/35">
+                                    {questionNumber}.
+                                  </span>
+                                  <span>{q}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ))}
                       </div>
-                    ) : null}
+                    </div>
+                    <div
+                      className={`question-list-fade absolute inset-x-0 bottom-0 top-1/3 flex items-end justify-center pb-1 ${
+                        isQuestionListOpen ? 'question-list-fade--hidden' : ''
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        aria-controls="beclean-question-list"
+                        onClick={() => setIsQuestionListOpen(true)}
+                        className="question-list-action"
+                      >
+                        View all
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
